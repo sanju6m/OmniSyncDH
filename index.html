@@ -1,0 +1,1594 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OmniSync | Premium IT Solutions & Services</title>
+    <meta name="description" content="OmniSync provides modern IT solutions including software development, web design, hardware, managed IT services, AI solutions, networking, and business automation.">
+    <meta name="theme-color" content="#0F172A">
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="OmniSync | Premium IT Solutions">
+    <meta property="og:description" content="Complete IT Solutions for Modern Businesses. Powered by sanju.j (IGit)">
+    <meta property="og:type" content="website">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#2563EB',
+                        secondary: '#7C3AED',
+                        accent: '#06B6D4',
+                        background: '#0F172A',
+                        card: 'rgba(255,255,255,0.08)',
+                        cardHover: 'rgba(255,255,255,0.12)',
+                        textMain: '#FFFFFF',
+                        textMuted: '#CBD5E1',
+                        success: '#22C55E',
+                        warning: '#F59E0B',
+                        danger: '#EF4444',
+                    },
+                    backgroundImage: {
+                        'gradient-primary': 'linear-gradient(135deg, #2563EB, #7C3AED)',
+                        'gradient-glow': 'linear-gradient(135deg, rgba(37,99,235,0.5), rgba(124,58,237,0.5))',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom CSS Variables & Base Styles */
+        :root {
+            --bg-color: #0F172A;
+            --text-main: #FFFFFF;
+            --text-muted: #CBD5E1;
+            --card-bg: rgba(255,255,255,0.03);
+            --card-border: rgba(255,255,255,0.1);
+        }
+
+        .light-mode {
+            --bg-color: #F8FAFC;
+            --text-main: #0F172A;
+            --text-muted: #475569;
+            --card-bg: rgba(255,255,255,0.8);
+            --card-border: rgba(0,0,0,0.1);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        h1, h2, h3, h4, h5, h6, .font-heading {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0F172A; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+        /* Glassmorphism Utilities */
+        .glass {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+        }
+        
+        .glass-nav {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .light-mode .glass-nav {
+            background: rgba(248, 250, 252, 0.85);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        /* Typography & Gradients */
+        .text-gradient {
+            background: linear-gradient(135deg, #3B82F6, #A855F7, #06B6D4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+        .delay-300 { transition-delay: 300ms; }
+
+        /* Hover Effects */
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .hover-lift:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px -10px rgba(37,99,235,0.2);
+            border-color: rgba(124,58,237,0.3);
+        }
+
+        .btn-gradient {
+            background-size: 200% auto;
+            transition: 0.5s;
+        }
+        .btn-gradient:hover {
+            background-position: right center;
+        }
+
+        /* Background Effects */
+        .bg-glow {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        /* Auto Scroll Sliders */
+        .marquee-wrapper {
+            display: flex;
+            overflow: hidden;
+            user-select: none;
+            gap: 2rem;
+        }
+        .marquee-content {
+            display: flex;
+            flex-shrink: 0;
+            align-items: center;
+            justify-content: space-around;
+            gap: 2rem;
+            min-width: 100%;
+            animation: scroll 25s linear infinite;
+        }
+        @keyframes scroll {
+            from { transform: translateX(0); }
+            to { transform: translateX(calc(-100% - 2rem)); }
+        }
+
+        /* Loader */
+        #loader {
+            position: fixed;
+            inset: 0;
+            background: #0F172A;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s ease;
+        }
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(37,99,235,0.3);
+            border-radius: 50%;
+            border-top-color: #2563EB;
+            animation: spin 1s ease-in-out infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Scroll Progress */
+        #scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(to right, #2563EB, #7C3AED);
+            z-index: 1000;
+            transition: width 0.1s;
+        }
+
+        /* Particles Layer */
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        /* Hide Scrollbar for carousels */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="antialiased selection:bg-primary selection:text-white relative">
+
+    <!-- Loading Screen -->
+    <div id="loader">
+        <div class="flex flex-col items-center">
+            <div class="spinner mb-4"></div>
+            <div class="font-heading text-xl font-bold tracking-wider text-white">OMNISYNC</div>
+        </div>
+    </div>
+
+    <!-- Scroll Progress Bar -->
+    <div id="scroll-progress"></div>
+
+    <!-- Background Glow Effects -->
+    <div class="bg-glow w-96 h-96 bg-primary top-0 left-0 mix-blend-screen"></div>
+    <div class="bg-glow w-96 h-96 bg-secondary top-1/4 right-0 mix-blend-screen"></div>
+    <div class="bg-glow w-[500px] h-[500px] bg-accent bottom-0 left-1/4 mix-blend-screen opacity-20"></div>
+
+    <!-- Sticky Navigation -->
+    <nav class="fixed w-full z-50 glass-nav transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center cursor-pointer" onclick="window.scrollTo(0,0)">
+                    <span class="font-heading font-bold text-2xl tracking-tight">
+                        <i class="fa-solid fa-layer-group text-primary mr-2"></i>Omni<span class="text-primary">Sync</span>
+                    </span>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-6 lg:space-x-8">
+                    <a href="#home" class="text-sm font-medium hover:text-primary transition-colors">Home</a>
+                    <a href="#about" class="text-sm font-medium text-textMuted hover:text-primary transition-colors">About Us</a>
+                    <a href="#products" class="text-sm font-medium text-textMuted hover:text-primary transition-colors">Products</a>
+                    <a href="#services" class="text-sm font-medium text-textMuted hover:text-primary transition-colors">Services</a>
+                    <a href="#projects" class="text-sm font-medium text-textMuted hover:text-primary transition-colors">Projects</a>
+                    <a href="#ai" class="text-sm font-medium text-textMuted hover:text-primary transition-colors">AI Assistant</a>
+                    <a href="#contact" class="text-sm font-medium text-textMuted hover:text-primary transition-colors">Contact</a>
+                </div>
+
+                <!-- Right Actions -->
+                <div class="hidden md:flex items-center space-x-4">
+                    <button id="theme-toggle" class="p-2 rounded-full glass hover:bg-white/10 transition-colors" aria-label="Toggle Theme">
+                        <i class="fa-solid fa-moon"></i>
+                    </button>
+                    <!-- Updated Login Button to trigger modal -->
+                    <button onclick="openLoginModal(event)" class="text-sm font-medium text-textMuted hover:text-white transition-colors">Login</button>
+                    <a href="#contact" class="bg-gradient-primary btn-gradient text-white px-6 py-2.5 rounded-full text-sm font-medium shadow-[0_0_15px_rgba(37,99,235,0.5)] hover:shadow-[0_0_25px_rgba(37,99,235,0.7)]">
+                        Get a Quote
+                    </a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center space-x-3">
+                    <button id="mobile-theme-toggle" class="p-2 rounded-full glass" aria-label="Toggle Theme">
+                        <i class="fa-solid fa-moon"></i>
+                    </button>
+                    <button id="mobile-menu-btn" class="text-textMuted hover:text-white p-2">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu Panel -->
+        <div id="mobile-menu" class="hidden md:hidden glass border-t border-white/10 absolute w-full">
+            <div class="px-4 pt-2 pb-6 space-y-1">
+                <a href="#home" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-white/5">Home</a>
+                <a href="#about" class="block px-3 py-2 rounded-md text-base font-medium text-textMuted hover:bg-white/5 hover:text-white">About Us</a>
+                <a href="#products" class="block px-3 py-2 rounded-md text-base font-medium text-textMuted hover:bg-white/5 hover:text-white">Products</a>
+                <a href="#services" class="block px-3 py-2 rounded-md text-base font-medium text-textMuted hover:bg-white/5 hover:text-white">Services</a>
+                <a href="#projects" class="block px-3 py-2 rounded-md text-base font-medium text-textMuted hover:bg-white/5 hover:text-white">Projects</a>
+                <a href="#ai" class="block px-3 py-2 rounded-md text-base font-medium text-textMuted hover:bg-white/5 hover:text-white">AI Assistant</a>
+                <a href="#contact" class="block px-3 py-2 rounded-md text-base font-medium text-textMuted hover:bg-white/5 hover:text-white">Contact</a>
+                <button onclick="openLoginModal(event)" class="w-full text-left block px-3 py-2 rounded-md text-base font-medium text-textMuted hover:bg-white/5 hover:text-white">Login</button>
+                <a href="#contact" class="block mt-4 w-full text-center bg-gradient-primary text-white px-6 py-3 rounded-lg font-medium">Get a Quote</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden min-h-screen flex items-center">
+        <!-- Abstract Particles Container -->
+        <div id="particles-js" class="absolute inset-0"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            <div class="inline-flex items-center space-x-2 glass rounded-full px-4 py-1.5 mb-8 reveal">
+                <span class="flex h-2 w-2 relative">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-success opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-success"></span>
+                </span>
+                <span class="text-sm font-medium text-textMuted">Powered by sanju.j (IGit)</span>
+            </div>
+            
+            <h1 class="text-5xl md:text-7xl font-bold font-heading tracking-tight mb-6 reveal delay-100">
+                Complete IT Solutions for <br class="hidden md:block" />
+                <span class="text-gradient">Modern Businesses</span>
+            </h1>
+            
+            <p class="mt-4 text-lg md:text-xl text-textMuted max-w-3xl mx-auto reveal delay-200 mb-10 leading-relaxed">
+                Providing cutting-edge Software Development, Web Design, Hardware Solutions, Managed IT Services, AI Solutions, Networking, and Business Automation.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6 reveal delay-300">
+                <a href="#products" class="w-full sm:w-auto bg-gradient-primary btn-gradient text-white px-8 py-4 rounded-full font-medium shadow-[0_0_20px_rgba(37,99,235,0.4)] hover:shadow-[0_0_30px_rgba(37,99,235,0.6)] flex items-center justify-center">
+                    Explore Products <i class="fa-solid fa-arrow-right ml-2"></i>
+                </a>
+                <a href="#services" class="w-full sm:w-auto glass text-white px-8 py-4 rounded-full font-medium hover:bg-white/10 transition-colors flex items-center justify-center">
+                    Our Services
+                </a>
+            </div>
+
+            <!-- Floating Hero Icons -->
+            <div class="hidden lg:block absolute top-1/4 left-10 animate-bounce" style="animation-duration: 3s;">
+                <div class="glass p-4 rounded-2xl text-primary text-2xl shadow-lg"><i class="fa-solid fa-code"></i></div>
+            </div>
+            <div class="hidden lg:block absolute bottom-1/4 right-10 animate-bounce" style="animation-duration: 4s;">
+                <div class="glass p-4 rounded-2xl text-secondary text-2xl shadow-lg"><i class="fa-solid fa-microchip"></i></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Brands / Technologies Slider -->
+    <section class="py-10 border-y border-white/5 bg-black/20 backdrop-blur-sm relative z-10">
+        <div class="max-w-7xl mx-auto px-4 overflow-hidden">
+            <p class="text-center text-sm font-medium text-textMuted mb-6 uppercase tracking-widest">Technologies We Master</p>
+            <div class="marquee-wrapper">
+                <!-- Wrapper for seamless loop -->
+                <div class="marquee-content">
+                    <div class="flex items-center space-x-2 text-textMuted hover:text-white transition-colors"><i class="fa-brands fa-html5 text-2xl text-[#E34F26]"></i> <span class="font-medium">HTML5</span></div>
+                    <div class="flex items-center space-x-2 text-textMuted hover:text-white transition-colors"><i class="fa-brands fa-css3-alt text-2xl text-[#1572B6]"></i> <span class="font-medium">CSS3</span></div>
+                    <div class="flex items-center space-x-2 text-textMuted hover:text-white transition-colors"><i class="fa-brands fa-js text-2xl text-[#F7DF1E]"></i> <span class="font-medium">JavaScript</span></div>
+                    <div class="flex items-center space-x-2 text-textMuted hover:text-white transition-colors"><i class="fa-brands fa-react text-2xl text-[#61DAFB]"></i> <span class="font-medium">React</span></div>
+                    <div class="flex items-center space-x-2 text-textMuted hover:text-white transition-colors"><i class="fa-brands fa-node-js text-2xl text-[#339933]"></i> <span class="font-medium">Node.js</span></div>
+                    <div class="flex items-center space-x-2 text-textMuted hover:text-white transition-colors"><i class="fa-brands fa-php text-2xl text-[#777BB4]"></i> <span class="font-medium">PHP</span></div>
+                    <div class="flex items-center space-x-2 text-textMuted hover:text-white transition-colors"><i class="fa-brands fa-laravel text-2xl text-[#FF2D20]"></i> <span class="font-medium">Laravel</span></div>
+                    <div class="flex items-center space-x-2 text-textMuted hover:text-white transition-colors"><i class="fa-brands fa-python text-2xl text-[#3776AB]"></i> <span class="font-medium">Python</span></div>
+                    <div class="flex items-center space-x-2 text-textMuted hover:text-white transition-colors"><i class="fa-brands fa-java text-2xl text-[#007396]"></i> <span class="font-medium">Java</span></div>
+                    <div class="flex items-center space-x-2 text-textMuted hover:text-white transition-colors"><i class="fa-solid fa-database text-2xl text-[#47A248]"></i> <span class="font-medium">MongoDB</span></div>
+                    <div class="flex items-center space-x-2 text-textMuted hover:text-white transition-colors"><i class="fa-solid fa-server text-2xl text-[#4479A1]"></i> <span class="font-medium">MySQL</span></div>
+                </div>
+                <!-- Duplicate for loop -->
+                <div class="marquee-content" aria-hidden="true">
+                    <div class="flex items-center space-x-2 text-textMuted hover:text-white transition-colors"><i class="fa-brands fa-html5 text-2xl text-[#E34F26]"></i> <span class="font-medium">HTML5</span></div>
+                    <div class="flex items-center space-x-2 text-textMuted hover:text-white transition-colors"><i class="fa-brands fa-css3-alt text-2xl text-[#1572B6]"></i> <span class="font-medium">CSS3</span></div>
+                    <div class="flex items-center space-x-2 text-textMuted hover:text-white transition-colors"><i class="fa-brands fa-js text-2xl text-[#F7DF1E]"></i> <span class="font-medium">JavaScript</span></div>
+                    <div class="flex items-center space-x-2 text-textMuted hover:text-white transition-colors"><i class="fa-brands fa-react text-2xl text-[#61DAFB]"></i> <span class="font-medium">React</span></div>
+                    <div class="flex items-center space-x-2 text-textMuted hover:text-white transition-colors"><i class="fa-brands fa-node-js text-2xl text-[#339933]"></i> <span class="font-medium">Node.js</span></div>
+                    <div class="flex items-center space-x-2 text-textMuted hover:text-white transition-colors"><i class="fa-brands fa-php text-2xl text-[#777BB4]"></i> <span class="font-medium">PHP</span></div>
+                    <div class="flex items-center space-x-2 text-textMuted hover:text-white transition-colors"><i class="fa-brands fa-laravel text-2xl text-[#FF2D20]"></i> <span class="font-medium">Laravel</span></div>
+                    <div class="flex items-center space-x-2 text-textMuted hover:text-white transition-colors"><i class="fa-brands fa-python text-2xl text-[#3776AB]"></i> <span class="font-medium">Python</span></div>
+                    <div class="flex items-center space-x-2 text-textMuted hover:text-white transition-colors"><i class="fa-brands fa-java text-2xl text-[#007396]"></i> <span class="font-medium">Java</span></div>
+                    <div class="flex items-center space-x-2 text-textMuted hover:text-white transition-colors"><i class="fa-solid fa-database text-2xl text-[#47A248]"></i> <span class="font-medium">MongoDB</span></div>
+                    <div class="flex items-center space-x-2 text-textMuted hover:text-white transition-colors"><i class="fa-solid fa-server text-2xl text-[#4479A1]"></i> <span class="font-medium">MySQL</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-sm font-bold tracking-widest text-primary uppercase mb-2">Equipment & Hardware</h2>
+                <h3 class="text-3xl md:text-5xl font-heading font-bold mb-4">Premium <span class="text-gradient">Products</span></h3>
+                <p class="text-textMuted max-w-2xl mx-auto">High-quality hardware and accessories to power your business infrastructure.</p>
+            </div>
+
+            <!-- Filters -->
+            <div class="flex flex-wrap justify-center gap-3 mb-12 reveal delay-100">
+                <button class="filter-btn active glass px-6 py-2 rounded-full text-sm font-medium hover:bg-primary hover:text-white transition-all bg-primary/20 border-primary/50 text-white" data-filter="all">All</button>
+                <button class="filter-btn glass px-6 py-2 rounded-full text-sm font-medium hover:bg-primary/50 transition-all text-textMuted" data-filter="pos">POS Systems</button>
+                <button class="filter-btn glass px-6 py-2 rounded-full text-sm font-medium hover:bg-primary/50 transition-all text-textMuted" data-filter="laptops">Laptops</button>
+                <button class="filter-btn glass px-6 py-2 rounded-full text-sm font-medium hover:bg-primary/50 transition-all text-textMuted" data-filter="printers">Printers & Copiers</button>
+                <button class="filter-btn glass px-6 py-2 rounded-full text-sm font-medium hover:bg-primary/50 transition-all text-textMuted" data-filter="networking">Networking</button>
+            </div>
+
+            <!-- Products Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="product-grid">
+                
+                <!-- Product 1: POS System (Moved to First) -->
+                <div class="product-card glass rounded-2xl p-4 hover-lift reveal" data-category="pos">
+                    <div class="relative rounded-xl overflow-hidden mb-4 group aspect-[4/3] bg-white/5 cursor-pointer border border-primary/30 shadow-[0_0_15px_rgba(37,99,235,0.2)]" onclick="openPosModal()">
+                        <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="POS System" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute top-2 right-2 bg-gradient-to-r from-primary to-secondary text-xs font-bold px-3 py-1 rounded-full text-white shadow animate-pulse">New</div>
+                        <div class="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-sm">
+                            <span class="glass border-white/20 px-5 py-2 rounded-full text-sm font-medium text-white"><i class="fa-solid fa-expand mr-2"></i>View Details</span>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-start mb-2">
+                        <h4 class="font-heading font-bold text-lg leading-tight cursor-pointer hover:text-primary transition-colors" onclick="openPosModal()">Smart Enterprise POS</h4>
+                        <div class="text-warning text-sm"><i class="fa-solid fa-star"></i> 2.9</div>
+                    </div>
+                    <p class="text-textMuted text-xs mb-4 line-clamp-2">Complete retail management with inventory, procurement, and seamless checkout.</p>
+                    <div class="flex flex-col mt-auto space-y-2">
+                        <button onclick="openPosModal()" class="w-full bg-white/5 hover:bg-white/10 text-white py-2 rounded-lg transition-colors text-sm font-medium border border-white/10">
+                            Read Features
+                        </button>
+                        <a href="https://wa.me/94112345678?text=Hello,%20I'm%20interested%20in%20pre-ordering%20the%20Smart%20Enterprise%20POS%20System." target="_blank" class="w-full bg-gradient-primary btn-gradient text-white py-2 rounded-lg transition-colors text-sm font-medium text-center shadow-[0_4px_10px_rgba(37,99,235,0.3)]">
+                            <i class="fa-brands fa-whatsapp mr-1"></i> Pre-order
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Product 2: Laptops -->
+                <div class="product-card glass rounded-2xl p-4 hover-lift reveal delay-100" data-category="laptops">
+                    <div class="relative rounded-xl overflow-hidden mb-4 group aspect-[4/3] bg-white/5">
+                        <img src="https://images.unsplash.com/photo-1531297122539-5692f69f4c3a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Professional Laptop" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    </div>
+                    <div class="flex justify-between items-start mb-2">
+                        <h4 class="font-heading font-bold text-lg leading-tight">Professional Business Laptop</h4>
+                        <div class="text-warning text-sm"><i class="fa-solid fa-star"></i> 4.8</div>
+                    </div>
+                    <p class="text-textMuted text-xs mb-4 line-clamp-2">Premium enterprise-grade laptop designed for extreme performance and mobility.</p>
+                    <div class="flex items-center mt-auto">
+                        <a href="https://wa.me/94112345678?text=Hello,%20I'm%20interested%20in%20pre-ordering%20a%20Professional%20Business%20Laptop." target="_blank" class="w-full bg-white/10 hover:bg-white/20 text-white border border-white/10 py-2.5 rounded-lg transition-colors text-sm font-medium text-center">
+                            <i class="fa-brands fa-whatsapp mr-1 text-success"></i> Pre-order via WA
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Product 3: Printers -->
+                <div class="product-card glass rounded-2xl p-4 hover-lift reveal delay-200" data-category="printers">
+                    <div class="relative rounded-xl overflow-hidden mb-4 group aspect-[4/3] bg-white/5">
+                        <img src="https://images.unsplash.com/photo-1612815154858-60aa4c59eaa6?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Enterprise Copier" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    </div>
+                    <div class="flex justify-between items-start mb-2">
+                        <h4 class="font-heading font-bold text-lg leading-tight">Enterprise Multi-function Copier</h4>
+                        <div class="text-warning text-sm"><i class="fa-solid fa-star"></i> 4.9</div>
+                    </div>
+                    <p class="text-textMuted text-xs mb-4 line-clamp-2">High-volume enterprise copier and printer with secure cloud integration.</p>
+                    <div class="flex items-center mt-auto">
+                        <a href="https://wa.me/94112345678?text=Hello,%20I'm%20interested%20in%20pre-ordering%20the%20Enterprise%20Multi-function%20Copier." target="_blank" class="w-full bg-white/10 hover:bg-white/20 text-white border border-white/10 py-2.5 rounded-lg transition-colors text-sm font-medium text-center">
+                            <i class="fa-brands fa-whatsapp mr-1 text-success"></i> Pre-order via WA
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Product 4: Networking -->
+                <div class="product-card glass rounded-2xl p-4 hover-lift reveal delay-300" data-category="networking">
+                    <div class="relative rounded-xl overflow-hidden mb-4 group aspect-[4/3] bg-white/5">
+                        <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Enterprise Switch" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    </div>
+                    <div class="flex justify-between items-start mb-2">
+                        <h4 class="font-heading font-bold text-lg leading-tight">Enterprise 48-Port Switch</h4>
+                        <div class="text-warning text-sm"><i class="fa-solid fa-star"></i> 5.0</div>
+                    </div>
+                    <p class="text-textMuted text-xs mb-4 line-clamp-2">Managed Gigabit switch with advanced security for corporate networks.</p>
+                    <div class="flex items-center mt-auto">
+                        <a href="https://wa.me/94112345678?text=Hello,%20I'm%20interested%20in%20pre-ordering%20the%20Enterprise%2048-Port%20Switch." target="_blank" class="w-full bg-white/10 hover:bg-white/20 text-white border border-white/10 py-2.5 rounded-lg transition-colors text-sm font-medium text-center">
+                            <i class="fa-brands fa-whatsapp mr-1 text-success"></i> Pre-order via WA
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12 reveal">
+                <button class="glass px-8 py-3 rounded-full font-medium hover:bg-white/10 transition-colors">
+                    View Full Catalog <i class="fa-solid fa-arrow-right ml-2 text-sm"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-24 relative bg-black/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-sm font-bold tracking-widest text-primary uppercase mb-2">What We Do</h2>
+                <h3 class="text-3xl md:text-5xl font-heading font-bold mb-4">Our Core <span class="text-gradient">Services</span></h3>
+                <p class="text-textMuted max-w-2xl mx-auto">Comprehensive IT and business infrastructure services tailored to your organizational needs.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Service 1 -->
+                <div class="glass p-8 rounded-3xl hover-lift reveal relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-2xl group-hover:bg-primary/20 transition-all"></div>
+                    <div class="w-14 h-14 glass rounded-2xl flex items-center justify-center text-2xl text-primary mb-6 shadow-lg">
+                        <i class="fa-solid fa-laptop-code"></i>
+                    </div>
+                    <h4 class="font-heading font-bold text-xl mb-3">Web Design & Dev</h4>
+                    <ul class="text-sm text-textMuted space-y-2 mb-6">
+                        <li><i class="fa-solid fa-check text-success mr-2"></i> Website Development</li>
+                        <li><i class="fa-solid fa-check text-success mr-2"></i> E-commerce Solutions</li>
+                        <li><i class="fa-solid fa-check text-success mr-2"></i> Website Rental</li>
+                        <li><i class="fa-solid fa-check text-success mr-2"></i> Maintenance & Hosting</li>
+                    </ul>
+                    <a href="#" class="text-primary font-medium hover:text-white transition-colors flex items-center text-sm">Learn More <i class="fa-solid fa-arrow-right ml-2"></i></a>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="glass p-8 rounded-3xl hover-lift reveal delay-100 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-secondary/10 rounded-full blur-2xl group-hover:bg-secondary/20 transition-all"></div>
+                    <div class="w-14 h-14 glass rounded-2xl flex items-center justify-center text-2xl text-secondary mb-6 shadow-lg">
+                        <i class="fa-solid fa-print"></i>
+                    </div>
+                    <h4 class="font-heading font-bold text-xl mb-3">Printer & Copier</h4>
+                    <ul class="text-sm text-textMuted space-y-2 mb-6">
+                        <li><i class="fa-solid fa-check text-success mr-2"></i> Free on Contract (FOC)</li>
+                        <li><i class="fa-solid fa-check text-success mr-2"></i> Pay Per Copy (P2P)</li>
+                        <li><i class="fa-solid fa-check text-success mr-2"></i> Installment (4X) & AMC</li>
+                        <li><i class="fa-solid fa-check text-success mr-2"></i> Repair & Toner Supply</li>
+                    </ul>
+                    <a href="#" class="text-primary font-medium hover:text-white transition-colors flex items-center text-sm">Learn More <i class="fa-solid fa-arrow-right ml-2"></i></a>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="glass p-8 rounded-3xl hover-lift reveal delay-200 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-accent/10 rounded-full blur-2xl group-hover:bg-accent/20 transition-all"></div>
+                    <div class="w-14 h-14 glass rounded-2xl flex items-center justify-center text-2xl text-accent mb-6 shadow-lg">
+                        <i class="fa-solid fa-laptop"></i>
+                    </div>
+                    <h4 class="font-heading font-bold text-xl mb-3">Laptop Solutions</h4>
+                    <ul class="text-sm text-textMuted space-y-2 mb-6">
+                        <li><i class="fa-solid fa-check text-success mr-2"></i> Corporate Rental</li>
+                        <li><i class="fa-solid fa-check text-success mr-2"></i> Installment (4X) & Credit</li>
+                        <li><i class="fa-solid fa-check text-success mr-2"></i> Hardware Upgrades</li>
+                        <li><i class="fa-solid fa-check text-success mr-2"></i> Repair & Maintenance</li>
+                    </ul>
+                    <a href="#" class="text-primary font-medium hover:text-white transition-colors flex items-center text-sm">Learn More <i class="fa-solid fa-arrow-right ml-2"></i></a>
+                </div>
+
+                <!-- Service 4 -->
+                <div class="glass p-8 rounded-3xl hover-lift reveal relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-blue-400/10 rounded-full blur-2xl group-hover:bg-blue-400/20 transition-all"></div>
+                    <div class="w-14 h-14 glass rounded-2xl flex items-center justify-center text-2xl text-blue-400 mb-6 shadow-lg">
+                        <i class="fa-solid fa-snowflake"></i>
+                    </div>
+                    <h4 class="font-heading font-bold text-xl mb-3">Air Conditioning</h4>
+                    <ul class="text-sm text-textMuted space-y-2 mb-6">
+                        <li><i class="fa-solid fa-check text-success mr-2"></i> Corporate Installation</li>
+                        <li><i class="fa-solid fa-check text-success mr-2"></i> Repair & Servicing</li>
+                        <li><i class="fa-solid fa-check text-success mr-2"></i> Annual Service Contract</li>
+                        <li><i class="fa-solid fa-check text-success mr-2"></i> Preventive Maintenance</li>
+                    </ul>
+                    <a href="#" class="text-primary font-medium hover:text-white transition-colors flex items-center text-sm">Learn More <i class="fa-solid fa-arrow-right ml-2"></i></a>
+                </div>
+
+                <!-- Service 5 -->
+                <div class="glass p-8 rounded-3xl hover-lift reveal delay-100 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-pink-500/10 rounded-full blur-2xl group-hover:bg-pink-500/20 transition-all"></div>
+                    <div class="w-14 h-14 glass rounded-2xl flex items-center justify-center text-2xl text-pink-500 mb-6 shadow-lg">
+                        <i class="fa-solid fa-shirt"></i>
+                    </div>
+                    <h4 class="font-heading font-bold text-xl mb-3">Corporate Clothing</h4>
+                    <ul class="text-sm text-textMuted space-y-2 mb-6">
+                        <li><i class="fa-solid fa-check text-success mr-2"></i> Custom Design & Mfg</li>
+                        <li><i class="fa-solid fa-check text-success mr-2"></i> Screen Printing</li>
+                        <li><i class="fa-solid fa-check text-success mr-2"></i> Quality Embroidery</li>
+                        <li><i class="fa-solid fa-check text-success mr-2"></i> Uniform Production</li>
+                    </ul>
+                    <a href="#" class="text-primary font-medium hover:text-white transition-colors flex items-center text-sm">Learn More <i class="fa-solid fa-arrow-right ml-2"></i></a>
+                </div>
+
+                <!-- Custom Request -->
+                <div class="glass p-8 rounded-3xl hover-lift reveal delay-200 border-dashed border-2 border-white/20 flex flex-col justify-center items-center text-center">
+                    <div class="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center text-2xl mb-4">
+                        <i class="fa-solid fa-plus text-textMuted"></i>
+                    </div>
+                    <h4 class="font-heading font-bold text-xl mb-2">Custom Requirement?</h4>
+                    <p class="text-sm text-textMuted mb-4">Don't see what you need? We offer tailored IT solutions.</p>
+                    <a href="#contact" class="px-6 py-2 rounded-full border border-white/20 hover:bg-white hover:text-black transition-colors font-medium text-sm">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Product Section (Elina) -->
+    <section id="ai" class="py-24 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent z-0"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="glass rounded-[2.5rem] p-8 md:p-16 border border-primary/30 shadow-[0_0_50px_rgba(37,99,235,0.15)] overflow-hidden relative">
+                <!-- Glowing Orb inside card -->
+                <div class="absolute top-1/2 right-0 -translate-y-1/2 w-96 h-96 bg-primary/30 blur-[100px] rounded-full pointer-events-none mix-blend-screen"></div>
+                <div class="absolute bottom-0 left-0 w-64 h-64 bg-secondary/30 blur-[80px] rounded-full pointer-events-none mix-blend-screen"></div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div class="reveal">
+                        <div class="inline-flex items-center space-x-2 bg-primary/20 border border-primary/50 text-primary px-4 py-1.5 rounded-full text-sm font-bold mb-6">
+                            <i class="fa-solid fa-sparkles"></i> <span>Next-Gen AI Solution</span>
+                        </div>
+                        <h2 class="text-4xl md:text-5xl font-heading font-bold mb-6">Meet <span class="text-gradient">Elina AI</span><br>Visual Assistant</h2>
+                        <p class="text-textMuted text-lg mb-8">Empower your enterprise with an advanced AI assistant capable of vision, voice, and deep business automation.</p>
+                        
+                        <div class="grid grid-cols-2 gap-4 mb-8">
+                            <div class="flex items-center space-x-3 text-sm font-medium">
+                                <div class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-primary"><i class="fa-solid fa-eye"></i></div>
+                                <span>Computer Vision</span>
+                            </div>
+                            <div class="flex items-center space-x-3 text-sm font-medium">
+                                <div class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-secondary"><i class="fa-solid fa-microphone"></i></div>
+                                <span>Voice Commands</span>
+                            </div>
+                            <div class="flex items-center space-x-3 text-sm font-medium">
+                                <div class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-accent"><i class="fa-solid fa-robot"></i></div>
+                                <span>Smart Automation</span>
+                            </div>
+                            <div class="flex items-center space-x-3 text-sm font-medium">
+                                <div class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-success"><i class="fa-solid fa-chart-pie"></i></div>
+                                <span>Business Analytics</span>
+                            </div>
+                            <div class="flex items-center space-x-3 text-sm font-medium">
+                                <div class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-warning"><i class="fa-solid fa-ticket"></i></div>
+                                <span>Ticket Automation</span>
+                            </div>
+                            <div class="flex items-center space-x-3 text-sm font-medium">
+                                <div class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-danger"><i class="fa-solid fa-user-check"></i></div>
+                                <span>Face Recognition</span>
+                            </div>
+                        </div>
+                        
+                        <button class="bg-white text-black px-8 py-4 rounded-full font-bold shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)] transition-all flex items-center hover:bg-gray-100">
+                            Try Elina AI <i class="fa-solid fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="relative lg:h-[500px] flex items-center justify-center reveal delay-200">
+                        <!-- Abstract AI Visualization -->
+                        <div class="relative w-full max-w-md aspect-square">
+                            <div class="absolute inset-0 border-2 border-primary/30 rounded-full animate-[spin_10s_linear_infinite]"></div>
+                            <div class="absolute inset-4 border border-secondary/40 rounded-full animate-[spin_15s_linear_infinite_reverse] border-dashed"></div>
+                            <div class="absolute inset-8 border border-accent/30 rounded-full animate-[spin_20s_linear_infinite]"></div>
+                            
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <div class="w-32 h-32 bg-gradient-primary rounded-full blur-md animate-pulse"></div>
+                                <div class="absolute w-24 h-24 bg-white rounded-full flex items-center justify-center shadow-[0_0_50px_rgba(37,99,235,1)]">
+                                    <i class="fa-solid fa-brain text-5xl text-primary drop-shadow-md"></i>
+                                </div>
+                            </div>
+
+                            <!-- Floating UI Elements -->
+                            <div class="absolute top-10 -left-4 glass px-4 py-2 rounded-xl text-xs font-bold shadow-lg animate-bounce" style="animation-duration: 3s;">Scanning...</div>
+                            <div class="absolute bottom-20 -right-4 glass px-4 py-2 rounded-xl text-xs font-bold shadow-lg animate-bounce" style="animation-duration: 4s; animation-delay: 1s;">Data Analyzed</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-24 relative bg-black/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12 reveal">
+                <div>
+                    <h2 class="text-sm font-bold tracking-widest text-primary uppercase mb-2">Our Portfolio</h2>
+                    <h3 class="text-3xl md:text-5xl font-heading font-bold">Running <span class="text-gradient">Projects</span></h3>
+                </div>
+                <div class="mt-4 md:mt-0 flex space-x-2">
+                    <button class="w-10 h-10 rounded-full glass flex items-center justify-center hover:bg-white/10 transition-colors"><i class="fa-solid fa-chevron-left text-sm"></i></button>
+                    <button class="w-10 h-10 rounded-full glass flex items-center justify-center hover:bg-white/10 transition-colors"><i class="fa-solid fa-chevron-right text-sm"></i></button>
+                </div>
+            </div>
+
+            <div class="flex overflow-x-auto gap-6 pb-8 no-scrollbar snap-x">
+                <!-- Project 1 -->
+                <div class="min-w-[320px] md:min-w-[400px] glass rounded-2xl p-4 snap-center hover-lift reveal">
+                    <div class="relative h-48 rounded-xl overflow-hidden mb-4 bg-white/5">
+                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Finance Dashboard" class="w-full h-full object-cover">
+                        <div class="absolute top-3 left-3 bg-black/50 backdrop-blur-md px-3 py-1 rounded-full text-xs font-medium border border-white/10">Active</div>
+                    </div>
+                    <div class="text-xs text-primary font-bold mb-1 uppercase tracking-wider">Enterprise Software</div>
+                    <h4 class="font-heading font-bold text-xl mb-2">Finance Management Sys</h4>
+                    <p class="text-textMuted text-sm mb-4 line-clamp-2">Complete financial tracking and reporting dashboard for corporate clients.</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="text-xs px-2 py-1 bg-white/5 rounded text-gray-300">React</span>
+                        <span class="text-xs px-2 py-1 bg-white/5 rounded text-gray-300">Node.js</span>
+                        <span class="text-xs px-2 py-1 bg-white/5 rounded text-gray-300">MongoDB</span>
+                    </div>
+                    <a href="#" class="w-full block text-center glass py-2 rounded-lg text-sm font-medium hover:bg-primary transition-colors">View Project</a>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="min-w-[320px] md:min-w-[400px] glass rounded-2xl p-4 snap-center hover-lift reveal delay-100">
+                    <div class="relative h-48 rounded-xl overflow-hidden mb-4 bg-white/5">
+                        <img src="https://images.unsplash.com/photo-1555421689-491a97ff2040?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="HR System" class="w-full h-full object-cover">
+                        <div class="absolute top-3 left-3 bg-black/50 backdrop-blur-md px-3 py-1 rounded-full text-xs font-medium border border-white/10">Beta</div>
+                    </div>
+                    <div class="text-xs text-primary font-bold mb-1 uppercase tracking-wider">Web Application</div>
+                    <h4 class="font-heading font-bold text-xl mb-2">HR Management System</h4>
+                    <p class="text-textMuted text-sm mb-4 line-clamp-2">Automated payroll, attendance tracking, and employee self-service portal.</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="text-xs px-2 py-1 bg-white/5 rounded text-gray-300">Laravel</span>
+                        <span class="text-xs px-2 py-1 bg-white/5 rounded text-gray-300">Vue</span>
+                        <span class="text-xs px-2 py-1 bg-white/5 rounded text-gray-300">MySQL</span>
+                    </div>
+                    <a href="#" class="w-full block text-center glass py-2 rounded-lg text-sm font-medium hover:bg-primary transition-colors">View Project</a>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="min-w-[320px] md:min-w-[400px] glass rounded-2xl p-4 snap-center hover-lift reveal delay-200">
+                    <div class="relative h-48 rounded-xl overflow-hidden mb-4 bg-white/5">
+                        <img src="https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Inventory" class="w-full h-full object-cover">
+                        <div class="absolute top-3 left-3 bg-black/50 backdrop-blur-md px-3 py-1 rounded-full text-xs font-medium border border-white/10">Completed</div>
+                    </div>
+                    <div class="text-xs text-primary font-bold mb-1 uppercase tracking-wider">Business Automation</div>
+                    <h4 class="font-heading font-bold text-xl mb-2">Inventory System Pro</h4>
+                    <p class="text-textMuted text-sm mb-4 line-clamp-2">Real-time stock tracking with barcode integration and automated reordering.</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="text-xs px-2 py-1 bg-white/5 rounded text-gray-300">Next.js</span>
+                        <span class="text-xs px-2 py-1 bg-white/5 rounded text-gray-300">PostgreSQL</span>
+                    </div>
+                    <a href="#" class="w-full block text-center glass py-2 rounded-lg text-sm font-medium hover:bg-primary transition-colors">View Project</a>
+                </div>
+
+                <!-- Project 4 -->
+                <div class="min-w-[320px] md:min-w-[400px] glass rounded-2xl p-4 snap-center hover-lift reveal delay-100">
+                    <div class="relative h-48 rounded-xl overflow-hidden mb-4 bg-white/5">
+                        <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Student Management" class="w-full h-full object-cover">
+                        <div class="absolute top-3 left-3 bg-black/50 backdrop-blur-md px-3 py-1 rounded-full text-xs font-medium border border-white/10">Active</div>
+                    </div>
+                    <div class="text-xs text-primary font-bold mb-1 uppercase tracking-wider">Education Tech</div>
+                    <h4 class="font-heading font-bold text-xl mb-2">Student Management System</h4>
+                    <p class="text-textMuted text-sm mb-4 line-clamp-2">Comprehensive portal for attendance, grading, and parent-teacher communication.</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="text-xs px-2 py-1 bg-white/5 rounded text-gray-300">Angular</span>
+                        <span class="text-xs px-2 py-1 bg-white/5 rounded text-gray-300">Node.js</span>
+                        <span class="text-xs px-2 py-1 bg-white/5 rounded text-gray-300">Firebase</span>
+                    </div>
+                    <a href="#" class="w-full block text-center glass py-2 rounded-lg text-sm font-medium hover:bg-primary transition-colors">View Project</a>
+                </div>
+
+                <!-- Project 5 -->
+                <div class="min-w-[320px] md:min-w-[400px] glass rounded-2xl p-4 snap-center hover-lift reveal delay-200">
+                    <div class="relative h-48 rounded-xl overflow-hidden mb-4 bg-white/5">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Ticket System" class="w-full h-full object-cover">
+                        <div class="absolute top-3 left-3 bg-black/50 backdrop-blur-md px-3 py-1 rounded-full text-xs font-medium border border-white/10">Beta</div>
+                    </div>
+                    <div class="text-xs text-primary font-bold mb-1 uppercase tracking-wider">Enterprise Software</div>
+                    <h4 class="font-heading font-bold text-xl mb-2">Ticket Management System</h4>
+                    <p class="text-textMuted text-sm mb-4 line-clamp-2">Automated IT support ticketing with AI-based routing and SLA tracking.</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="text-xs px-2 py-1 bg-white/5 rounded text-gray-300">Python</span>
+                        <span class="text-xs px-2 py-1 bg-white/5 rounded text-gray-300">Django</span>
+                        <span class="text-xs px-2 py-1 bg-white/5 rounded text-gray-300">PostgreSQL</span>
+                    </div>
+                    <a href="#" class="w-full block text-center glass py-2 rounded-lg text-sm font-medium hover:bg-primary transition-colors">View Project</a>
+                </div>
+
+                <!-- Project 6 -->
+                <div class="min-w-[320px] md:min-w-[400px] glass rounded-2xl p-4 snap-center hover-lift reveal delay-100">
+                    <div class="relative h-48 rounded-xl overflow-hidden mb-4 bg-white/5">
+                        <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Hotel Booking" class="w-full h-full object-cover">
+                        <div class="absolute top-3 left-3 bg-black/50 backdrop-blur-md px-3 py-1 rounded-full text-xs font-medium border border-white/10">Completed</div>
+                    </div>
+                    <div class="text-xs text-primary font-bold mb-1 uppercase tracking-wider">Web Application</div>
+                    <h4 class="font-heading font-bold text-xl mb-2">Hotel Booking Platform</h4>
+                    <p class="text-textMuted text-sm mb-4 line-clamp-2">Direct booking platform with channel manager integration and payment gateway.</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="text-xs px-2 py-1 bg-white/5 rounded text-gray-300">React</span>
+                        <span class="text-xs px-2 py-1 bg-white/5 rounded text-gray-300">Tailwind</span>
+                        <span class="text-xs px-2 py-1 bg-white/5 rounded text-gray-300">MySQL</span>
+                    </div>
+                    <a href="#" class="w-full block text-center glass py-2 rounded-lg text-sm font-medium hover:bg-primary transition-colors">View Project</a>
+                </div>
+
+                <!-- Project 7 -->
+                <div class="min-w-[320px] md:min-w-[400px] glass rounded-2xl p-4 snap-center hover-lift reveal delay-200">
+                    <div class="relative h-48 rounded-xl overflow-hidden mb-4 bg-white/5">
+                        <img src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Corporate Portfolio" class="w-full h-full object-cover">
+                        <div class="absolute top-3 left-3 bg-black/50 backdrop-blur-md px-3 py-1 rounded-full text-xs font-medium border border-white/10">Completed</div>
+                    </div>
+                    <div class="text-xs text-primary font-bold mb-1 uppercase tracking-wider">Web Design</div>
+                    <h4 class="font-heading font-bold text-xl mb-2">Modern Corporate Portfolio</h4>
+                    <p class="text-textMuted text-sm mb-4 line-clamp-2">High-end, animated corporate portfolio website focused on speed and SEO.</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="text-xs px-2 py-1 bg-white/5 rounded text-gray-300">Next.js</span>
+                        <span class="text-xs px-2 py-1 bg-white/5 rounded text-gray-300">Framer Motion</span>
+                    </div>
+                    <a href="#" class="w-full block text-center glass py-2 rounded-lg text-sm font-medium hover:bg-primary transition-colors">View Project</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us & Testimonials -->
+    <section class="py-24 relative bg-black/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-16">
+            
+            <!-- Why Us -->
+            <div>
+                <h2 class="text-sm font-bold tracking-widest text-primary uppercase mb-2 reveal">Why OmniSync?</h2>
+                <h3 class="text-3xl md:text-4xl font-heading font-bold mb-8 reveal delay-100">The Enterprise <span class="text-gradient">Advantage</span></h3>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="glass p-4 rounded-xl flex items-center space-x-4 reveal">
+                        <div class="w-10 h-10 rounded-lg bg-primary/20 text-primary flex items-center justify-center"><i class="fa-solid fa-user-tie"></i></div>
+                        <span class="font-medium">Certified Engineers</span>
+                    </div>
+                    <div class="glass p-4 rounded-xl flex items-center space-x-4 reveal delay-100">
+                        <div class="w-10 h-10 rounded-lg bg-success/20 text-success flex items-center justify-center"><i class="fa-solid fa-tags"></i></div>
+                        <span class="font-medium">Affordable Pricing</span>
+                    </div>
+                    <div class="glass p-4 rounded-xl flex items-center space-x-4 reveal">
+                        <div class="w-10 h-10 rounded-lg bg-warning/20 text-warning flex items-center justify-center"><i class="fa-solid fa-bolt"></i></div>
+                        <span class="font-medium">Fast Delivery</span>
+                    </div>
+                    <div class="glass p-4 rounded-xl flex items-center space-x-4 reveal delay-100">
+                        <div class="w-10 h-10 rounded-lg bg-secondary/20 text-secondary flex items-center justify-center"><i class="fa-solid fa-brain"></i></div>
+                        <span class="font-medium">AI Solutions</span>
+                    </div>
+                    <div class="glass p-4 rounded-xl flex items-center space-x-4 reveal">
+                        <div class="w-10 h-10 rounded-lg bg-accent/20 text-accent flex items-center justify-center"><i class="fa-solid fa-shield-halved"></i></div>
+                        <span class="font-medium">Secure Systems</span>
+                    </div>
+                    <div class="glass p-4 rounded-xl flex items-center space-x-4 reveal delay-100">
+                        <div class="w-10 h-10 rounded-lg bg-blue-400/20 text-blue-400 flex items-center justify-center"><i class="fa-solid fa-cloud"></i></div>
+                        <span class="font-medium">Cloud Integration</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testimonials -->
+            <div class="relative reveal delay-200">
+                <div class="glass p-8 rounded-3xl relative overflow-hidden h-full flex flex-col justify-center min-h-[380px]">
+                    <i class="fa-solid fa-quote-left text-6xl text-white/5 absolute top-8 left-8"></i>
+                    
+                    <div class="testimonial-slider grid w-full flex-grow">
+                        <!-- Card 1 -->
+                        <div class="testimonial-slide col-start-1 row-start-1 opacity-100 z-10 transition-opacity duration-700 self-center">
+                            <div class="flex text-warning mb-4 text-sm">
+                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            </div>
+                            <p class="text-lg italic text-textMuted mb-6 relative z-10">"OmniSync transformed our legacy HR systems into a modern, seamless application. Their AI integration saved us countless hours of manual work."</p>
+                            <div class="flex items-center space-x-4">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="David Chen" class="w-12 h-12 rounded-full border-2 border-primary object-cover">
+                                <div>
+                                    <h4 class="font-bold text-sm">David Chen</h4>
+                                    <p class="text-xs text-textMuted">CTO, TechCorp Singapore</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 2 -->
+                        <div class="testimonial-slide col-start-1 row-start-1 opacity-0 z-0 pointer-events-none transition-opacity duration-700 self-center">
+                            <div class="flex text-warning mb-4 text-sm">
+                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            </div>
+                            <p class="text-lg italic text-textMuted mb-6 relative z-10">"The custom inventory system drastically reduced our stockouts. The interface is intuitive, fast, and completely adapted to our logistics flow."</p>
+                            <div class="flex items-center space-x-4">
+                                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Sarah Jenkins" class="w-12 h-12 rounded-full border-2 border-primary object-cover">
+                                <div>
+                                    <h4 class="font-bold text-sm">Sarah Jenkins</h4>
+                                    <p class="text-xs text-textMuted">Operations Director, Nexus Logistics, UK</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 3 -->
+                        <div class="testimonial-slide col-start-1 row-start-1 opacity-0 z-0 pointer-events-none transition-opacity duration-700 self-center">
+                            <div class="flex text-warning mb-4 text-sm">
+                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
+                            </div>
+                            <p class="text-lg italic text-textMuted mb-6 relative z-10">"OmniSync's POS hardware and software combo transformed our retail branches. Zero downtime since launch, and the analytics are outstanding."</p>
+                            <div class="flex items-center space-x-4">
+                                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Michael Chang" class="w-12 h-12 rounded-full border-2 border-primary object-cover">
+                                <div>
+                                    <h4 class="font-bold text-sm">Michael Chang</h4>
+                                    <p class="text-xs text-textMuted">CEO, RetailPro, Malaysia</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 4 -->
+                        <div class="testimonial-slide col-start-1 row-start-1 opacity-0 z-0 pointer-events-none transition-opacity duration-700 self-center">
+                            <div class="flex text-warning mb-4 text-sm">
+                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            </div>
+                            <p class="text-lg italic text-textMuted mb-6 relative z-10">"Elina AI is a game-changer. It automated our initial candidate screening via smart ticketing, saving our HR team over 20 hours a week."</p>
+                            <div class="flex items-center space-x-4">
+                                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Priya Patel" class="w-12 h-12 rounded-full border-2 border-primary object-cover">
+                                <div>
+                                    <h4 class="font-bold text-sm">Priya Patel</h4>
+                                    <p class="text-xs text-textMuted">HR Manager, TechNova, India</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 5 -->
+                        <div class="testimonial-slide col-start-1 row-start-1 opacity-0 z-0 pointer-events-none transition-opacity duration-700 self-center">
+                            <div class="flex text-warning mb-4 text-sm">
+                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            </div>
+                            <p class="text-lg italic text-textMuted mb-6 relative z-10">"Flawless execution on our enterprise cloud migration project. OmniSync has highly capable engineers and excellent communication."</p>
+                            <div class="flex items-center space-x-4">
+                                <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Lars Jensen" class="w-12 h-12 rounded-full border-2 border-primary object-cover">
+                                <div>
+                                    <h4 class="font-bold text-sm">Lars Jensen</h4>
+                                    <p class="text-xs text-textMuted">CTO, FjordTech, Denmark</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 6 -->
+                        <div class="testimonial-slide col-start-1 row-start-1 opacity-0 z-0 pointer-events-none transition-opacity duration-700 self-center">
+                            <div class="flex text-warning mb-4 text-sm">
+                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            </div>
+                            <p class="text-lg italic text-textMuted mb-6 relative z-10">"They designed our e-commerce platform and even handled all our corporate apparel needs for staff. A truly premium, one-stop solution."</p>
+                            <div class="flex items-center space-x-4">
+                                <img src="https://images.unsplash.com/photo-1531123897727-8f129e1bf98c?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Amina Diop" class="w-12 h-12 rounded-full border-2 border-primary object-cover">
+                                <div>
+                                    <h4 class="font-bold text-sm">Amina Diop</h4>
+                                    <p class="text-xs text-textMuted">Founder, StyleHub, UAE</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 7 -->
+                        <div class="testimonial-slide col-start-1 row-start-1 opacity-0 z-0 pointer-events-none transition-opacity duration-700 self-center">
+                            <div class="flex text-warning mb-4 text-sm">
+                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
+                            </div>
+                            <p class="text-lg italic text-textMuted mb-6 relative z-10">"The network security upgrade was completely seamless. OmniSync delivered enterprise-grade hardware exactly on schedule."</p>
+                            <div class="flex items-center space-x-4">
+                                <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Carlos Rodriguez" class="w-12 h-12 rounded-full border-2 border-primary object-cover">
+                                <div>
+                                    <h4 class="font-bold text-sm">Carlos Rodriguez</h4>
+                                    <p class="text-xs text-textMuted">IT Director, MedCorp, Spain</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 8 -->
+                        <div class="testimonial-slide col-start-1 row-start-1 opacity-0 z-0 pointer-events-none transition-opacity duration-700 self-center">
+                            <div class="flex text-warning mb-4 text-sm">
+                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            </div>
+                            <p class="text-lg italic text-textMuted mb-6 relative z-10">"Our new hotel management website increased direct bookings by 40% in just two months. The UI/UX design is outstanding."</p>
+                            <div class="flex items-center space-x-4">
+                                <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Yuki Tanaka" class="w-12 h-12 rounded-full border-2 border-primary object-cover">
+                                <div>
+                                    <h4 class="font-bold text-sm">Yuki Tanaka</h4>
+                                    <p class="text-xs text-textMuted">General Manager, Sakura Hotels, Japan</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 9 -->
+                        <div class="testimonial-slide col-start-1 row-start-1 opacity-0 z-0 pointer-events-none transition-opacity duration-700 self-center">
+                            <div class="flex text-warning mb-4 text-sm">
+                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            </div>
+                            <p class="text-lg italic text-textMuted mb-6 relative z-10">"The B2B procurement platform they built customized to our workflow has eliminated manual purchasing errors entirely."</p>
+                            <div class="flex items-center space-x-4">
+                                <img src="https://images.unsplash.com/photo-1598550874175-4d0ef436c909?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Emily Thorne" class="w-12 h-12 rounded-full border-2 border-primary object-cover">
+                                <div>
+                                    <h4 class="font-bold text-sm">Emily Thorne</h4>
+                                    <p class="text-xs text-textMuted">Head of Procurement, BuildRite, Australia</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 10 -->
+                        <div class="testimonial-slide col-start-1 row-start-1 opacity-0 z-0 pointer-events-none transition-opacity duration-700 self-center">
+                            <div class="flex text-warning mb-4 text-sm">
+                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            </div>
+                            <p class="text-lg italic text-textMuted mb-6 relative z-10">"Exceptional 24/7 support. Any minor issue we encounter is diagnosed and resolved within minutes. True professionals."</p>
+                            <div class="flex items-center space-x-4">
+                                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Ahmed Al-Fayed" class="w-12 h-12 rounded-full border-2 border-primary object-cover">
+                                <div>
+                                    <h4 class="font-bold text-sm">Ahmed Al-Fayed</h4>
+                                    <p class="text-xs text-textMuted">Director, Al-Fayed Group, Oman</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="testimonial-dots" class="flex flex-wrap gap-2 mt-8 z-20">
+                        <!-- Dots appended by JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-sm font-bold tracking-widest text-primary uppercase mb-2">Get In Touch</h2>
+                <h3 class="text-3xl md:text-5xl font-heading font-bold mb-4">Let's Build <span class="text-gradient">Together</span></h3>
+            </div>
+
+            <div class="glass rounded-[2rem] overflow-hidden flex flex-col lg:flex-row reveal delay-100 border border-white/10 shadow-2xl">
+                <!-- Info & Map -->
+                <div class="w-full lg:w-2/5 bg-black/40 p-8 lg:p-12 relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-primary opacity-10"></div>
+                    <h4 class="text-2xl font-bold mb-6 font-heading text-white">Contact Info</h4>
+                    
+                    <div class="space-y-6 relative z-10">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-10 h-10 rounded-full glass flex items-center justify-center text-primary flex-shrink-0"><i class="fa-solid fa-location-dot"></i></div>
+                            <div>
+                                <p class="text-sm font-medium text-white mb-1">Headquarters</p>
+                                <p class="text-sm text-textMuted">Gampaha,<br>Western Province, Sri Lanka</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="w-10 h-10 rounded-full glass flex items-center justify-center text-primary flex-shrink-0"><i class="fa-solid fa-envelope"></i></div>
+                            <div>
+                                <p class="text-sm font-medium text-white mb-1">Email Us</p>
+                                <p class="text-sm text-textMuted">hello@omnisync.com<br>sanjujm06@gmail.com</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="w-10 h-10 rounded-full glass flex items-center justify-center text-primary flex-shrink-0"><i class="fa-solid fa-phone"></i></div>
+                            <div>
+                                <p class="text-sm font-medium text-white mb-1">Call Us</p>
+                                <p class="text-sm text-textMuted">+94 70 708 0045<br>24/7 Support Line</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-12 relative z-10">
+                        <p class="text-sm font-medium mb-4">Follow Us</p>
+                        <div class="flex space-x-3">
+                            <a href="#" class="w-10 h-10 rounded-full glass flex items-center justify-center hover:bg-primary transition-colors text-white"><i class="fa-brands fa-linkedin-in"></i></a>
+                            <a href="#" class="w-10 h-10 rounded-full glass flex items-center justify-center hover:bg-primary transition-colors text-white"><i class="fa-brands fa-twitter"></i></a>
+                            <a href="#" class="w-10 h-10 rounded-full glass flex items-center justify-center hover:bg-primary transition-colors text-white"><i class="fa-brands fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form -->
+                <div class="w-full lg:w-3/5 p-8 lg:p-12">
+                    <form class="space-y-6" id="contact-form" onsubmit="event.preventDefault();">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-textMuted mb-2">Full Name</label>
+                                <input type="text" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" placeholder="John Doe">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-textMuted mb-2">Email Address</label>
+                                <input type="email" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" placeholder="john@company.com">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-textMuted mb-2">Phone</label>
+                                <input type="tel" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" placeholder="+1 234 567 890">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-textMuted mb-2">Interested Service</label>
+                                <select class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors appearance-none">
+                                    <option class="bg-gray-900">Software Development</option>
+                                    <option class="bg-gray-900">Hardware & Equipment</option>
+                                    <option class="bg-gray-900">Managed IT Services</option>
+                                    <option class="bg-gray-900">AI Solutions (Elina)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-textMuted mb-2">Message</label>
+                            <textarea rows="4" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors resize-none" placeholder="How can we help your business?"></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-gradient-primary btn-gradient text-white py-4 rounded-xl font-bold shadow-lg hover:shadow-[0_0_20px_rgba(37,99,235,0.5)]">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[#080B14] pt-20 pb-10 border-t border-white/5 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 mb-16">
+                <!-- Brand col -->
+                <div class="lg:col-span-2">
+                    <span class="font-heading font-bold text-2xl tracking-tight mb-4 inline-block">
+                        <i class="fa-solid fa-layer-group text-primary mr-2"></i>Omni<span class="text-primary">Sync</span>
+                    </span>
+                    <p class="text-textMuted text-sm mb-6 max-w-sm">
+                        Providing complete IT solutions, hardware, software development, and AI integration for modern businesses globally.
+                    </p>
+                    <div class="text-xs text-textMuted bg-white/5 inline-block px-3 py-1 rounded-full border border-white/10 mb-6">
+                        Powered by sanju.j (IGit)
+                    </div>
+                </div>
+
+                <!-- Links 1 -->
+                <div>
+                    <h5 class="text-white font-bold mb-4 font-heading text-sm uppercase tracking-wider">Company</h5>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-textMuted hover:text-primary text-sm transition-colors">About Us</a></li>
+                        <li><a href="#" class="text-textMuted hover:text-primary text-sm transition-colors">Careers</a></li>
+                        <li><a href="#" class="text-textMuted hover:text-primary text-sm transition-colors">News & Blog</a></li>
+                        <li><a href="#" class="text-textMuted hover:text-primary text-sm transition-colors">Projects</a></li>
+                    </ul>
+                </div>
+
+                <!-- Links 2 -->
+                <div>
+                    <h5 class="text-white font-bold mb-4 font-heading text-sm uppercase tracking-wider">Services</h5>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-textMuted hover:text-primary text-sm transition-colors">Software Dev</a></li>
+                        <li><a href="#" class="text-textMuted hover:text-primary text-sm transition-colors">Hardware Solutions</a></li>
+                        <li><a href="#" class="text-textMuted hover:text-primary text-sm transition-colors">Managed IT</a></li>
+                        <li><a href="#" class="text-textMuted hover:text-primary text-sm transition-colors">Elina AI</a></li>
+                    </ul>
+                </div>
+
+                <!-- Newsletter -->
+                <div>
+                    <h5 class="text-white font-bold mb-4 font-heading text-sm uppercase tracking-wider">Newsletter</h5>
+                    <p class="text-textMuted text-xs mb-4">Subscribe for the latest tech insights and updates.</p>
+                    <form class="flex" onsubmit="event.preventDefault();">
+                        <input type="email" placeholder="Email address" class="w-full bg-white/5 border border-white/10 rounded-l-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary">
+                        <button class="bg-primary hover:bg-blue-600 px-3 py-2 rounded-r-lg transition-colors text-white"><i class="fa-solid fa-paper-plane"></i></button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-textMuted text-xs mb-4 md:mb-0">
+                    &copy; 2026 OmniSync IT Solutions. All rights reserved.
+                </p>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-textMuted hover:text-white text-xs">Privacy Policy</a>
+                    <a href="#" class="text-textMuted hover:text-white text-xs">Terms of Service</a>
+                    <a href="#" class="text-textMuted hover:text-white text-xs">Sitemap</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Actions -->
+    <a href="#" class="fixed bottom-6 right-6 w-14 h-14 bg-[#25D366] text-white rounded-full flex items-center justify-center text-3xl shadow-lg hover:scale-110 transition-transform z-50">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+    
+    <button id="back-to-top" class="fixed bottom-24 right-6 w-12 h-12 glass rounded-full flex items-center justify-center text-white opacity-0 pointer-events-none transition-all duration-300 z-50 hover:bg-primary">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+    <!-- POS Modal -->
+    <div id="pos-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center bg-black/80 backdrop-blur-md opacity-0 transition-opacity duration-300 p-4">
+        <div class="glass relative w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl p-6 md:p-10 transform scale-95 transition-transform duration-300 shadow-[0_0_50px_rgba(37,99,235,0.2)] border border-primary/20">
+            <!-- Close Button -->
+            <button onclick="closePosModal()" class="absolute top-4 right-4 md:top-6 md:right-6 w-10 h-10 rounded-full bg-white/5 hover:bg-danger hover:text-white transition-colors flex items-center justify-center text-textMuted z-10">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <!-- Modal Header -->
+            <div class="text-center mb-8 pr-8 md:pr-0">
+                <div class="inline-block bg-primary/20 text-primary px-3 py-1 rounded-full text-xs font-bold mb-3 tracking-wider uppercase">Enterprise Solution</div>
+                <h3 class="text-3xl md:text-4xl font-heading font-bold text-white">Smart Enterprise POS</h3>
+                <p class="text-textMuted mt-2 text-sm md:text-base">A complete ecosystem for inventory, procurement, and point-of-sale.</p>
+            </div>
+
+            <!-- Features Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                <!-- Inventory -->
+                <div class="bg-black/40 rounded-2xl p-6 border border-white/5">
+                    <div class="text-primary text-3xl mb-4"><i class="fa-solid fa-boxes-stacked"></i></div>
+                    <h4 class="font-heading font-bold text-lg text-white mb-3">Inventory Management</h4>
+                    <ul class="text-sm text-textMuted space-y-2">
+                        <li><i class="fa-solid fa-check text-success mr-2 text-xs"></i>Item & Category Creation</li>
+                        <li><i class="fa-solid fa-check text-success mr-2 text-xs"></i>Goods Receipts & Issues</li>
+                        <li><i class="fa-solid fa-check text-success mr-2 text-xs"></i>Goods Returns</li>
+                        <li><i class="fa-solid fa-check text-success mr-2 text-xs"></i>Internal Stock Transfers</li>
+                        <li><i class="fa-solid fa-check text-success mr-2 text-xs"></i>Physical Stock Adjustments</li>
+                        <li><i class="fa-solid fa-check text-success mr-2 text-xs"></i>Document Authorization</li>
+                        <li><i class="fa-solid fa-check text-success mr-2 text-xs"></i>10+ Inventory Reports</li>
+                    </ul>
+                </div>
+
+                <!-- Procurement -->
+                <div class="bg-black/40 rounded-2xl p-6 border border-white/5">
+                    <div class="text-secondary text-3xl mb-4"><i class="fa-solid fa-truck-fast"></i></div>
+                    <h4 class="font-heading font-bold text-lg text-white mb-3">Procurement</h4>
+                    <ul class="text-sm text-textMuted space-y-2">
+                        <li><i class="fa-solid fa-check text-success mr-2 text-xs"></i>Supplier Profile Creation</li>
+                        <li><i class="fa-solid fa-check text-success mr-2 text-xs"></i>Purchase Requisitions</li>
+                        <li><i class="fa-solid fa-check text-success mr-2 text-xs"></i>Purchase Orders</li>
+                        <li><i class="fa-solid fa-check text-success mr-2 text-xs"></i>PR/PO Line-item Cancel</li>
+                        <li><i class="fa-solid fa-check text-success mr-2 text-xs"></i>Document Authorization</li>
+                        <li><i class="fa-solid fa-check text-success mr-2 text-xs"></i>6+ Procurement Reports</li>
+                    </ul>
+                </div>
+
+                <!-- POS -->
+                <div class="bg-black/40 rounded-2xl p-6 border border-white/5">
+                    <div class="text-accent text-3xl mb-4"><i class="fa-solid fa-cash-register"></i></div>
+                    <h4 class="font-heading font-bold text-lg text-white mb-3">POS System</h4>
+                    <ul class="text-sm text-textMuted space-y-2">
+                        <li><i class="fa-solid fa-check text-success mr-2 text-xs"></i>Customer Profile Creation</li>
+                        <li><i class="fa-solid fa-check text-success mr-2 text-xs"></i>Sales Counter Billing</li>
+                        <li><i class="fa-solid fa-check text-success mr-2 text-xs"></i>Price List Maintenance</li>
+                        <li><i class="fa-solid fa-check text-success mr-2 text-xs"></i>Discount Profiles</li>
+                        <li><i class="fa-solid fa-check text-success mr-2 text-xs"></i>Shift & Cash Mgmt</li>
+                        <li><i class="fa-solid fa-check text-success mr-2 text-xs"></i>Bank Deposits</li>
+                        <li><i class="fa-solid fa-check text-success mr-2 text-xs"></i>8+ Sales Reports</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- FOC Base Rent Model Section -->
+            <div class="bg-gradient-to-br from-primary/10 to-secondary/10 border border-primary/20 rounded-2xl p-6 md:p-8 mb-8 relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-primary/20 blur-[80px] rounded-full pointer-events-none"></div>
+                
+                <h4 class="font-heading font-bold text-xl text-white mb-6">Why choose our FOC Base rent model?</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
+                    <div class="flex gap-4">
+                        <div class="text-primary text-xl mt-1"><i class="fa-solid fa-piggy-bank"></i></div>
+                        <div>
+                            <h5 class="font-bold text-white text-sm">Zero Upfront Investment</h5>
+                            <p class="text-xs text-textMuted mt-1">Preserve capital. Get the base system free of charge; pay an affordable monthly rent.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="text-secondary text-xl mt-1"><i class="fa-solid fa-shield-halved"></i></div>
+                        <div>
+                            <h5 class="font-bold text-white text-sm">Prevent Shrinkage</h5>
+                            <p class="text-xs text-textMuted mt-1">Tight controls & shift management prevent theft and stock losses.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="text-accent text-xl mt-1"><i class="fa-solid fa-bolt"></i></div>
+                        <div>
+                            <h5 class="font-bold text-white text-sm">Streamlined Ops</h5>
+                            <p class="text-xs text-textMuted mt-1">Automate ordering and speed up checkout across multiple branches.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="text-success text-xl mt-1"><i class="fa-solid fa-chart-line"></i></div>
+                        <div>
+                            <h5 class="font-bold text-white text-sm">Data-Driven Decisions</h5>
+                            <p class="text-xs text-textMuted mt-1">Access 24+ comprehensive reports to optimize purchasing and sales.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Included Services -->
+            <div class="mb-8">
+                <h4 class="font-heading font-bold text-base text-white mb-3">Services covered under Monthly Subscription:</h4>
+                <div class="flex flex-wrap gap-3">
+                    <span class="glass px-3 py-1.5 rounded-lg text-xs text-textMuted border border-white/5 flex items-center"><i class="fa-solid fa-wrench text-primary mr-2"></i> Free Maintenance & Bug Fixing</span>
+                    <span class="glass px-3 py-1.5 rounded-lg text-xs text-textMuted border border-white/5 flex items-center"><i class="fa-solid fa-cloud text-secondary mr-2"></i> Hosting & Backup Services</span>
+                    <span class="glass px-3 py-1.5 rounded-lg text-xs text-textMuted border border-white/5 flex items-center"><i class="fa-solid fa-shield-check text-accent mr-2"></i> Data Warranty (Auto Cloud Backup)</span>
+                    <span class="glass px-3 py-1.5 rounded-lg text-xs text-textMuted border border-white/5 flex items-center"><i class="fa-solid fa-server text-success mr-2"></i> 99% Uptime Warranty & Monitoring</span>
+                </div>
+            </div>
+
+            <!-- CTA -->
+            <div class="text-center pt-6 border-t border-white/10">
+                <a href="https://wa.me/94112345678?text=Hello,%20I'm%20interested%20in%20pre-ordering%20the%20Smart%20Enterprise%20POS%20System%20with%20the%20FOC%20Base%20Rent%20model." target="_blank" class="inline-flex items-center justify-center bg-gradient-primary btn-gradient text-white px-8 py-4 rounded-full font-bold shadow-[0_0_20px_rgba(37,99,235,0.4)] hover:shadow-[0_0_30px_rgba(37,99,235,0.6)] w-full md:w-auto">
+                    <i class="fa-brands fa-whatsapp text-xl mr-2"></i> Pre-order via WhatsApp Now
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="fixed inset-0 z-[110] hidden flex items-center justify-center bg-black/80 backdrop-blur-md opacity-0 transition-opacity duration-300 p-4">
+        <div class="glass relative w-full max-w-md rounded-3xl p-8 transform scale-95 transition-transform duration-300 shadow-[0_0_50px_rgba(37,99,235,0.2)] border border-primary/20">
+            <!-- Close Button -->
+            <button onclick="closeLoginModal()" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/5 hover:bg-danger hover:text-white transition-colors flex items-center justify-center text-textMuted z-10">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <!-- Modal Header -->
+            <div class="text-center mb-8">
+                <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/20 text-primary mb-4 border border-primary/30 shadow-[0_0_15px_rgba(37,99,235,0.3)]">
+                    <i class="fa-solid fa-shield-halved text-2xl"></i>
+                </div>
+                <h3 class="text-2xl font-heading font-bold text-white">System Access</h3>
+                <p class="text-textMuted mt-2 text-sm">Enter your Login ID to access the dashboard.</p>
+            </div>
+
+            <!-- Login Form -->
+            <form onsubmit="handleLogin(event)" class="space-y-6">
+                <div>
+                    <label class="block text-sm font-medium text-textMuted mb-2">Login ID / Access Key</label>
+                    <input type="text" id="login-id" required class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" placeholder="e.g. admin-7784">
+                    <p id="login-error" class="hidden text-danger text-xs mt-2 font-medium"><i class="fa-solid fa-circle-exclamation mr-1"></i> Invalid Access Key. Access denied.</p>
+                </div>
+                <button type="submit" class="w-full bg-gradient-primary btn-gradient text-white py-3.5 rounded-xl font-bold shadow-lg hover:shadow-[0_0_20px_rgba(37,99,235,0.5)] flex items-center justify-center">
+                    Proceed to Dashboard <i class="fa-solid fa-arrow-right ml-2"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <!-- Particles.js for Hero Background -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script>
+        // Initialize Particles
+        particlesJS('particles-js', {
+            "particles": {
+                "number": { "value": 40, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": ["#2563EB", "#7C3AED", "#06B6D4"] },
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.3, "random": true },
+                "size": { "value": 3, "random": true },
+                "line_linked": { "enable": true, "distance": 150, "color": "#ffffff", "opacity": 0.1, "width": 1 },
+                "move": { "enable": true, "speed": 1, "direction": "none", "random": true, "out_mode": "out" }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": { "enable": true, "mode": "grab" },
+                    "onclick": { "enable": true, "mode": "push" }
+                },
+                "modes": {
+                    "grab": { "distance": 140, "line_linked": { "opacity": 0.5 } }
+                }
+            },
+            "retina_detect": true
+        });
+
+        // DOM Loaded Init
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // Remove Loader
+            setTimeout(() => {
+                const loader = document.getElementById('loader');
+                loader.style.opacity = '0';
+                setTimeout(() => loader.remove(), 500);
+            }, 800);
+
+            // Scroll Progress & Nav Styling & Back to Top
+            const progressBar = document.getElementById('scroll-progress');
+            const navbar = document.getElementById('navbar');
+            const backToTop = document.getElementById('back-to-top');
+
+            window.addEventListener('scroll', () => {
+                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (winScroll / height) * 100;
+                progressBar.style.width = scrolled + '%';
+
+                if (winScroll > 50) {
+                    navbar.classList.add('shadow-lg', 'bg-black/90');
+                    navbar.classList.remove('py-2');
+                    backToTop.classList.remove('opacity-0', 'pointer-events-none');
+                } else {
+                    navbar.classList.remove('shadow-lg', 'bg-black/90');
+                    navbar.classList.add('py-2');
+                    backToTop.classList.add('opacity-0', 'pointer-events-none');
+                }
+            });
+
+            backToTop.addEventListener('click', () => window.scrollTo({top: 0, behavior: 'smooth'}));
+
+            // Mobile Menu Toggle
+            const mobileBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            // Close mobile menu on link click
+            document.querySelectorAll('#mobile-menu a').forEach(link => {
+                link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+            });
+
+            // Theme Toggle (Dark/Light)
+            const toggleThemeBtns = [document.getElementById('theme-toggle'), document.getElementById('mobile-theme-toggle')];
+            toggleThemeBtns.forEach(btn => {
+                if(!btn) return;
+                btn.addEventListener('click', () => {
+                    document.body.classList.toggle('light-mode');
+                    const isLight = document.body.classList.contains('light-mode');
+                    const icon = btn.querySelector('i');
+                    if (isLight) {
+                        icon.classList.replace('fa-moon', 'fa-sun');
+                        document.documentElement.classList.remove('dark');
+                    } else {
+                        icon.classList.replace('fa-sun', 'fa-moon');
+                        document.documentElement.classList.add('dark');
+                    }
+                });
+            });
+
+            // Intersection Observer for scroll animations (reveal)
+            const revealOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        // For counters
+                        if (entry.target.querySelector('.counter') || entry.target.classList.contains('counter')) {
+                            startCounters(entry.target);
+                        }
+                    }
+                });
+            }, revealOptions);
+
+            document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+            // Animated Counters
+            let countersStarted = false;
+            function startCounters(container) {
+                if (countersStarted) return;
+                const counters = document.querySelectorAll('.counter');
+                counters.forEach(counter => {
+                    const target = +counter.getAttribute('data-target');
+                    const duration = 2000; 
+                    const stepTime = Math.abs(Math.floor(duration / target));
+                    let current = 0;
+                    
+                    const timer = setInterval(() => {
+                        current += Math.ceil(target / 50);
+                        if (current >= target) {
+                            counter.innerText = target;
+                            clearInterval(timer);
+                        } else {
+                            counter.innerText = current;
+                        }
+                    }, stepTime);
+                });
+                countersStarted = true;
+            }
+
+            // Product Filtering
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const products = document.querySelectorAll('.product-card');
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Update active state
+                    filterBtns.forEach(b => {
+                        b.classList.remove('active', 'bg-primary/20', 'border-primary/50', 'text-white');
+                        b.classList.add('text-textMuted');
+                    });
+                    btn.classList.add('active', 'bg-primary/20', 'border-primary/50', 'text-white');
+                    btn.classList.remove('text-textMuted');
+
+                    const filter = btn.getAttribute('data-filter');
+
+                    // Filter logic
+                    products.forEach(product => {
+                        product.style.display = 'none'; // reset
+                        if (filter === 'all' || product.getAttribute('data-category') === filter) {
+                            product.style.display = 'block';
+                            product.classList.remove('active');
+                            setTimeout(() => product.classList.add('active'), 50);
+                        }
+                    });
+                });
+            });
+
+            // Testimonial Auto-Slider
+            const slides = document.querySelectorAll('.testimonial-slide');
+            const dotsContainer = document.getElementById('testimonial-dots');
+            let currentSlide = 0;
+            let slideInterval;
+
+            if (slides.length > 0 && dotsContainer) {
+                // Generate dots dynamically based on slides count
+                slides.forEach((_, i) => {
+                    const dot = document.createElement('div');
+                    dot.className = `h-1 rounded-full cursor-pointer transition-all duration-300 ${i === 0 ? 'w-8 bg-primary' : 'w-2 bg-white/20 hover:bg-white/50'}`;
+                    dot.addEventListener('click', () => goToSlide(i));
+                    dotsContainer.appendChild(dot);
+                });
+
+                const dots = dotsContainer.querySelectorAll('div');
+
+                function goToSlide(n) {
+                    // Hide current slide
+                    slides[currentSlide].classList.remove('opacity-100', 'z-10');
+                    slides[currentSlide].classList.add('opacity-0', 'z-0', 'pointer-events-none');
+                    dots[currentSlide].className = 'w-2 h-1 bg-white/20 rounded-full cursor-pointer hover:bg-white/50 transition-all duration-300';
+                    
+                    // Update index
+                    currentSlide = n;
+                    
+                    // Show new slide
+                    slides[currentSlide].classList.remove('opacity-0', 'z-0', 'pointer-events-none');
+                    slides[currentSlide].classList.add('opacity-100', 'z-10');
+                    dots[currentSlide].className = 'w-8 h-1 bg-primary rounded-full cursor-pointer transition-all duration-300';
+                }
+
+                function nextSlide() { 
+                    goToSlide((currentSlide + 1) % slides.length); 
+                }
+                
+                // Start auto-slider
+                slideInterval = setInterval(nextSlide, 5000);
+
+                // Pause on hover
+                const sliderContainer = document.querySelector('.testimonial-slider').parentElement;
+                sliderContainer.addEventListener('mouseenter', () => clearInterval(slideInterval));
+                sliderContainer.addEventListener('mouseleave', () => slideInterval = setInterval(nextSlide, 5000));
+            }
+
+            // POS Modal Logic
+            const posModal = document.getElementById('pos-modal');
+            const posModalInner = posModal.querySelector('.glass');
+
+            window.openPosModal = function() {
+                posModal.classList.remove('hidden');
+                setTimeout(() => {
+                    posModal.classList.remove('opacity-0');
+                    posModalInner.classList.remove('scale-95');
+                }, 10);
+                document.body.style.overflow = 'hidden'; 
+            }
+
+            window.closePosModal = function() {
+                posModal.classList.add('opacity-0');
+                posModalInner.classList.add('scale-95');
+                setTimeout(() => {
+                    posModal.classList.add('hidden');
+                    document.body.style.overflow = ''; 
+                }, 300); 
+            }
+
+            // Login Modal Logic
+            const loginModal = document.getElementById('login-modal');
+            const loginModalInner = loginModal.querySelector('.glass');
+
+            window.openLoginModal = function(e) {
+                if(e) e.preventDefault();
+                loginModal.classList.remove('hidden');
+                setTimeout(() => {
+                    loginModal.classList.remove('opacity-0');
+                    loginModalInner.classList.remove('scale-95');
+                }, 10);
+                document.body.style.overflow = 'hidden';
+            }
+
+            window.closeLoginModal = function() {
+                loginModal.classList.add('opacity-0');
+                loginModalInner.classList.add('scale-95');
+                setTimeout(() => {
+                    loginModal.classList.add('hidden');
+                    document.body.style.overflow = '';
+                }, 300);
+            }
+
+            window.handleLogin = function(e) {
+                e.preventDefault();
+                const loginId = document.getElementById('login-id').value;
+                const errorMsg = document.getElementById('login-error');
+                
+                // Strictly enforce the provided login ID
+                if (loginId === 'localadmin/scc#$!0620') {
+                    window.location.href = 'dashboard.html';
+                } else {
+                    // Show error and prevent login
+                    errorMsg.classList.remove('hidden');
+                    setTimeout(() => errorMsg.classList.add('hidden'), 3000);
+                }
+            }
+
+            // Close on click outside modal content
+            posModal.addEventListener('click', (e) => {
+                if (e.target === posModal) closePosModal();
+            });
+            loginModal.addEventListener('click', (e) => {
+                if (e.target === loginModal) closeLoginModal();
+            });
+
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAS Dashboard | OmniSync</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#2563EB',
+                        secondary: '#7C3AED',
+                        accent: '#06B6D4',
+                        background: '#0F172A',
+                        surface: '#1E293B',
+                        card: 'rgba(255,255,255,0.03)',
+                        borderLight: 'rgba(255,255,255,0.1)',
+                        textMain: '#FFFFFF',
+                        textMuted: '#CBD5E1',
+                        success: '#22C55E',
+                        warning: '#F59E0B',
+                        danger: '#EF4444',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: var(--bg-color, #0F172A);
+            color: #FFFFFF;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .glass {
+            background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .nav-item.active {
+            background: linear-gradient(90deg, rgba(37,99,235,0.15) 0%, transparent 100%);
+            border-left: 3px solid #2563EB;
+            color: #FFFFFF;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px;}
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+        /* Chart Animation */
+        @keyframes fillUp {
+            from { height: 0%; opacity: 0;}
+            to { opacity: 1; }
+        }
+        .bar-chart { animation: fillUp 1s ease-out forwards; }
+    </style>
+</head>
+<body class="flex h-screen overflow-hidden selection:bg-primary selection:text-white">
+
+    <!-- Sidebar -->
+    <aside class="w-64 h-full border-r border-borderLight flex flex-col bg-background relative z-20">
+        <!-- Logo -->
+        <div class="h-20 flex items-center px-6 border-b border-borderLight flex-shrink-0">
+            <span class="font-heading font-bold text-xl tracking-tight cursor-pointer" onclick="window.location.href='index.html'">
+                <i class="fa-solid fa-layer-group text-primary mr-2"></i>Omni<span class="text-primary">Sync</span>
+                <span class="text-[10px] text-textMuted block uppercase tracking-widest mt-0.5">Enterprise SAS</span>
+            </span>
+        </div>
+
+        <!-- Navigation -->
+        <div class="flex-1 overflow-y-auto py-6 flex flex-col gap-1 px-3">
+            <p class="text-xs font-bold text-textMuted uppercase tracking-wider mb-2 px-3">Main Menu</p>
+            
+            <a href="#" onclick="switchView('dashboard', 'Dashboard Overview', 'Key performance metrics and sentiment analysis')" id="nav-dashboard" class="nav-item active flex items-center px-3 py-2.5 rounded-r-lg text-sm font-medium transition-colors hover:bg-white/5 hover:text-white border-l-2 border-transparent group">
+                <i class="fa-solid fa-chart-pie w-6 text-primary group-hover:text-primary transition-colors"></i> Dashboard
+            </a>
+            
+            <a href="#" onclick="switchView('messages', 'Message Center', 'Manage and reply to cross-platform communications')" id="nav-messages" class="nav-item flex items-center px-3 py-2.5 rounded-r-lg text-sm font-medium text-textMuted transition-colors hover:bg-white/5 hover:text-white border-l-2 border-transparent group">
+                <i class="fa-solid fa-message w-6 text-textMuted group-hover:text-white transition-colors"></i> Message Center
+                <span id="msg-badge" class="ml-auto bg-primary text-white text-[10px] font-bold px-2 py-0.5 rounded-full">0</span>
+            </a>
+            
+            <a href="#" onclick="switchView('pos', 'POS System', 'Smart Enterprise POS ecosystem details')" id="nav-pos" class="nav-item flex items-center px-3 py-2.5 rounded-r-lg text-sm font-medium text-textMuted transition-colors hover:bg-white/5 hover:text-white border-l-2 border-transparent group">
+                <i class="fa-solid fa-cash-register w-6 text-textMuted group-hover:text-white transition-colors"></i> POS System
+            </a>
+            
+            <a href="#" onclick="switchView('channels', 'Connected Channels', 'Engagement metrics across all social platforms')" id="nav-channels" class="nav-item flex items-center px-3 py-2.5 rounded-r-lg text-sm font-medium text-textMuted transition-colors hover:bg-white/5 hover:text-white border-l-2 border-transparent group">
+                <i class="fa-solid fa-hashtag w-6 text-textMuted group-hover:text-white transition-colors"></i> Channels
+            </a>
+        </div>
+        
+        <!-- Sidebar Bottom Action -->
+        <div class="p-4 border-t border-borderLight">
+            <button onclick="window.location.href='index.html'" class="w-full flex items-center px-3 py-2 rounded-lg text-sm font-medium text-textMuted hover:bg-danger/10 hover:text-danger transition-colors group">
+                <i class="fa-solid fa-right-from-bracket w-6"></i> Logout
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col h-full relative overflow-hidden bg-[#0B1120]">
+        
+        <!-- Abstract Background Glows for Premium Feel -->
+        <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[100px] pointer-events-none z-0"></div>
+        <div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-secondary/10 rounded-full blur-[100px] pointer-events-none z-0"></div>
+
+        <!-- Top Header -->
+        <header class="h-20 glass flex items-center justify-between px-8 border-b-0 relative z-20">
+            <div>
+                <h1 id="header-title" class="text-xl font-heading font-bold text-white transition-all">Dashboard Overview</h1>
+                <p id="header-subtitle" class="text-xs text-textMuted transition-all">Key performance metrics and sentiment analysis</p>
+            </div>
+            
+            <div class="flex items-center space-x-6">
+                <!-- Search -->
+                <div class="relative hidden md:block">
+                    <i class="fa-solid fa-search absolute left-3 top-1/2 -translate-y-1/2 text-textMuted text-sm"></i>
+                    <input type="text" placeholder="Search records..." class="bg-surface/50 border border-borderLight rounded-full py-2 pl-9 pr-4 text-sm text-white focus:outline-none focus:border-primary transition-colors w-64">
+                </div>
+                
+                <!-- My Profile (Updated User ID) -->
+                <button class="flex items-center space-x-2 text-textMuted hover:text-white transition-colors text-sm font-medium bg-white/5 px-3 py-1.5 rounded-full border border-white/10">
+                    <i class="fa-solid fa-user-shield text-primary"></i>
+                    <span class="hidden sm:inline tracking-wider font-mono text-xs">localadmin/scc#$!0620</span>
+                </button>
+                
+                <!-- Topbar Logout -->
+                <button onclick="window.location.href='index.html'" class="flex items-center space-x-2 text-textMuted hover:text-danger transition-colors border-l border-borderLight pl-6 text-sm font-medium">
+                    <i class="fa-solid fa-power-off"></i>
+                    <span class="hidden sm:inline">Logout</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- View Container -->
+        <div class="flex-1 overflow-hidden relative z-10">
+            
+            <!-- VIEW 1: DASHBOARD -->
+            <div id="view-dashboard" class="view-section h-full overflow-y-auto p-8">
+                <!-- KPI Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <!-- Total Engagement -->
+                    <div class="glass p-6 rounded-2xl border border-white/5 hover:border-primary/30 transition-colors relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-primary/10 rounded-full blur-xl group-hover:bg-primary/20 transition-colors"></div>
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <p class="text-sm text-textMuted font-medium mb-1">Total Engagement</p>
+                                <h3 class="text-3xl font-bold font-heading">1.2M</h3>
+                            </div>
+                            <div class="w-12 h-12 rounded-xl bg-primary/20 text-primary flex items-center justify-center shadow-lg text-xl"><i class="fa-solid fa-users-rays"></i></div>
+                        </div>
+                        <div class="flex items-center text-xs">
+                            <span class="text-success flex items-center font-medium"><i class="fa-solid fa-arrow-trend-up mr-1"></i> +24.5%</span>
+                            <span class="text-textMuted ml-2">across all networks</span>
+                        </div>
+                    </div>
+
+                    <!-- Incoming Messages -->
+                    <div class="glass p-6 rounded-2xl border border-white/5 hover:border-secondary/30 transition-colors relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-secondary/10 rounded-full blur-xl group-hover:bg-secondary/20 transition-colors"></div>
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <p class="text-sm text-textMuted font-medium mb-1">Incoming Messages</p>
+                                <h3 class="text-3xl font-bold font-heading">8,432</h3>
+                            </div>
+                            <div class="w-12 h-12 rounded-xl bg-secondary/20 text-secondary flex items-center justify-center shadow-lg text-xl"><i class="fa-solid fa-inbox"></i></div>
+                        </div>
+                        <div class="flex items-center text-xs">
+                            <span class="text-warning flex items-center font-medium"><i class="fa-solid fa-clock mr-1"></i> 12 pending</span>
+                            <span class="text-textMuted ml-2">awaiting reply</span>
+                        </div>
+                    </div>
+
+                    <!-- Avg Sentiment Score -->
+                    <div class="glass p-6 rounded-2xl border border-white/5 hover:border-success/30 transition-colors relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-success/10 rounded-full blur-xl group-hover:bg-success/20 transition-colors"></div>
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <p class="text-sm text-textMuted font-medium mb-1">Avg. Sentiment Score</p>
+                                <h3 class="text-3xl font-bold font-heading text-success">84%</h3>
+                            </div>
+                            <div class="w-12 h-12 rounded-xl bg-success/20 text-success flex items-center justify-center shadow-lg text-xl"><i class="fa-solid fa-face-smile-beam"></i></div>
+                        </div>
+                        <div class="flex items-center text-xs">
+                            <span class="text-success flex items-center font-medium"><i class="fa-solid fa-arrow-trend-up mr-1"></i> +5%</span>
+                            <span class="text-textMuted ml-2">Highly Positive</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Chart Mockup -->
+                <div class="glass p-6 rounded-2xl border border-white/5 flex flex-col">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="font-heading font-bold text-lg">Engagement Overview</h3>
+                        <select class="bg-surface/50 border border-borderLight rounded-lg text-xs px-3 py-1.5 focus:outline-none focus:border-primary text-textMuted">
+                            <option>Last 7 Days</option>
+                            <option>This Month</option>
+                        </select>
+                    </div>
+                    
+                    <div class="flex-1 flex items-end justify-between gap-4 h-64 mt-4 border-b border-borderLight pb-2">
+                        <!-- Bars -->
+                        <div class="w-full bg-primary/20 rounded-t-md hover:bg-primary/40 transition-colors relative group bar-chart" style="height: 40%;"></div>
+                        <div class="w-full bg-primary/30 rounded-t-md hover:bg-primary/50 transition-colors relative group bar-chart" style="height: 60%; animation-delay: 0.1s;"></div>
+                        <div class="w-full bg-primary/40 rounded-t-md hover:bg-primary/60 transition-colors relative group bar-chart" style="height: 35%; animation-delay: 0.2s;"></div>
+                        <div class="w-full bg-primary/60 rounded-t-md hover:bg-primary/80 transition-colors relative group bar-chart" style="height: 80%; animation-delay: 0.3s;"></div>
+                        <div class="w-full bg-primary rounded-t-md shadow-[0_0_15px_rgba(37,99,235,0.4)] relative group bar-chart" style="height: 100%; animation-delay: 0.4s;"></div>
+                        <div class="w-full bg-primary/40 rounded-t-md hover:bg-primary/60 transition-colors relative group bar-chart" style="height: 50%; animation-delay: 0.5s;"></div>
+                        <div class="w-full bg-primary/50 rounded-t-md hover:bg-primary/70 transition-colors relative group bar-chart" style="height: 70%; animation-delay: 0.6s;"></div>
+                    </div>
+                    <div class="flex justify-between text-xs text-textMuted mt-3 px-2">
+                        <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW 2: MESSAGE CENTER -->
+            <div id="view-messages" class="view-section hidden h-full overflow-y-auto p-8">
+                <div class="glass p-2 rounded-3xl border border-white/5 flex flex-col h-full min-h-[600px]">
+                    <!-- Toolbar -->
+                    <div class="p-4 border-b border-white/5 flex flex-col sm:flex-row justify-between items-center gap-4">
+                        <div class="flex space-x-2">
+                            <button class="bg-primary text-white px-4 py-2 rounded-lg text-sm font-medium shadow-[0_0_10px_rgba(37,99,235,0.4)]">All Messages</button>
+                            <button onclick="exportReplies()" class="bg-success/20 text-success border border-success/30 hover:bg-success hover:text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                                <i class="fa-solid fa-download mr-2"></i>Export Replies to File
+                            </button>
+                        </div>
+                        <div class="relative">
+                            <i class="fa-solid fa-search absolute left-3 top-1/2 -translate-y-1/2 text-textMuted text-sm"></i>
+                            <input type="text" placeholder="Search conversations..." class="bg-black/30 border border-white/10 rounded-lg py-2 pl-9 pr-4 text-sm text-white focus:outline-none focus:border-primary w-64">
+                        </div>
+                    </div>
+                    
+                    <!-- Dynamic Message List -->
+                    <div id="messages-container" class="flex-1 overflow-y-auto p-2 space-y-3">
+                        <!-- Messages populated by JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW 3: POS SYSTEM DETAILS -->
+            <div id="view-pos" class="view-section hidden h-full overflow-y-auto p-8">
+                <div class="glass p-8 rounded-3xl border border-white/5 max-w-5xl mx-auto">
+                    <div class="text-center mb-10">
+                        <div class="inline-block bg-primary/20 text-primary px-3 py-1 rounded-full text-xs font-bold mb-3 tracking-wider uppercase">Active Module</div>
+                        <h3 class="text-3xl font-heading font-bold text-white">Smart Enterprise POS</h3>
+                        <p class="text-textMuted mt-2 text-sm">Comprehensive overview of your POS, Inventory, and Procurement features.</p>
+                    </div>
+
+                    <!-- Features Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                        <!-- Inventory -->
+                        <div class="bg-black/40 rounded-2xl p-6 border border-white/5 hover:border-primary/50 transition-colors">
+                            <div class="text-primary text-3xl mb-4"><i class="fa-solid fa-boxes-stacked"></i></div>
+                            <h4 class="font-heading font-bold text-lg text-white mb-3">Inventory Management</h4>
+                            <ul class="text-sm text-textMuted space-y-2">
+                                <li><i class="fa-solid fa-check text-success mr-2"></i>Item & Category Creation</li>
+                                <li><i class="fa-solid fa-check text-success mr-2"></i>Goods Receipts & Issues</li>
+                                <li><i class="fa-solid fa-check text-success mr-2"></i>Goods Returns (Sales/Purchases)</li>
+                                <li><i class="fa-solid fa-check text-success mr-2"></i>Internal Stock Transfers</li>
+                                <li><i class="fa-solid fa-check text-success mr-2"></i>Physical Stock Adjustments</li>
+                                <li><i class="fa-solid fa-check text-success mr-2"></i>Document Authorization</li>
+                                <li><i class="fa-solid fa-check text-success mr-2"></i>10+ Inventory Reports</li>
+                            </ul>
+                        </div>
+
+                        <!-- Procurement -->
+                        <div class="bg-black/40 rounded-2xl p-6 border border-white/5 hover:border-secondary/50 transition-colors">
+                            <div class="text-secondary text-3xl mb-4"><i class="fa-solid fa-truck-fast"></i></div>
+                            <h4 class="font-heading font-bold text-lg text-white mb-3">Procurement</h4>
+                            <ul class="text-sm text-textMuted space-y-2">
+                                <li><i class="fa-solid fa-check text-success mr-2"></i>Supplier Profile Creation</li>
+                                <li><i class="fa-solid fa-check text-success mr-2"></i>Purchase Requisitions</li>
+                                <li><i class="fa-solid fa-check text-success mr-2"></i>Purchase Orders</li>
+                                <li><i class="fa-solid fa-check text-success mr-2"></i>PR/PO Line-item Cancel</li>
+                                <li><i class="fa-solid fa-check text-success mr-2"></i>Document Authorization</li>
+                                <li><i class="fa-solid fa-check text-success mr-2"></i>6+ Procurement Reports</li>
+                            </ul>
+                        </div>
+
+                        <!-- POS -->
+                        <div class="bg-black/40 rounded-2xl p-6 border border-white/5 hover:border-accent/50 transition-colors">
+                            <div class="text-accent text-3xl mb-4"><i class="fa-solid fa-cash-register"></i></div>
+                            <h4 class="font-heading font-bold text-lg text-white mb-3">POS System</h4>
+                            <ul class="text-sm text-textMuted space-y-2">
+                                <li><i class="fa-solid fa-check text-success mr-2"></i>Customer Profile Creation</li>
+                                <li><i class="fa-solid fa-check text-success mr-2"></i>Retail Invoice (Counter Billing)</li>
+                                <li><i class="fa-solid fa-check text-success mr-2"></i>Sales Price List Maintenance</li>
+                                <li><i class="fa-solid fa-check text-success mr-2"></i>Customer Discount Profile</li>
+                                <li><i class="fa-solid fa-check text-success mr-2"></i>Shift & Cash Mgmt</li>
+                                <li><i class="fa-solid fa-check text-success mr-2"></i>Bank Deposits</li>
+                                <li><i class="fa-solid fa-check text-success mr-2"></i>8+ Sales Reports</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Included Services & Rent Model -->
+                    <div class="bg-gradient-to-br from-primary/10 to-secondary/10 border border-primary/20 rounded-2xl p-8 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-64 h-64 bg-primary/20 blur-[80px] rounded-full pointer-events-none"></div>
+                        <div class="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-8">
+                            <div>
+                                <h4 class="font-heading font-bold text-xl text-white mb-4">Included in Subscription</h4>
+                                <ul class="space-y-3">
+                                    <li class="flex items-start"><i class="fa-solid fa-wrench text-primary mt-1 mr-3"></i> <span class="text-sm text-textMuted"><strong class="text-white">Free Maintenance:</strong> Includes priority bug fixing.</span></li>
+                                    <li class="flex items-start"><i class="fa-solid fa-cloud text-secondary mt-1 mr-3"></i> <span class="text-sm text-textMuted"><strong class="text-white">Hosting & Backup:</strong> Enterprise-grade cloud services.</span></li>
+                                    <li class="flex items-start"><i class="fa-solid fa-shield-check text-accent mt-1 mr-3"></i> <span class="text-sm text-textMuted"><strong class="text-white">Data Warranty:</strong> Automated secure cloud backups.</span></li>
+                                    <li class="flex items-start"><i class="fa-solid fa-server text-success mt-1 mr-3"></i> <span class="text-sm text-textMuted"><strong class="text-white">99% Uptime:</strong> 24/7 continuous system monitoring.</span></li>
+                                </ul>
+                            </div>
+                            <div class="bg-black/30 p-6 rounded-xl border border-white/5">
+                                <h4 class="font-heading font-bold text-lg text-white mb-3">FOC Base Rent Model Benefits</h4>
+                                <div class="space-y-3 text-sm text-textMuted">
+                                    <p><strong class="text-white">Zero Upfront Investment:</strong> Preserve capital. Base system is free; pay an affordable monthly rent.</p>
+                                    <p><strong class="text-white">Prevent Shrinkage:</strong> Tight controls & shift management prevent theft and stock losses.</p>
+                                    <p><strong class="text-white">Streamlined Ops:</strong> Automate ordering and speed up checkout across branches.</p>
+                                    <p><strong class="text-white">Data-Driven Decisions:</strong> Access 24+ comprehensive reports to optimize operations.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW 4: CHANNELS -->
+            <div id="view-channels" class="view-section hidden h-full overflow-y-auto p-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    
+                    <!-- Facebook -->
+                    <div class="glass p-6 rounded-2xl border border-white/5 hover:border-[#1877F2]/50 transition-colors relative overflow-hidden group hover:-translate-y-1 shadow-lg">
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-[#1877F2]/10 rounded-full blur-xl group-hover:bg-[#1877F2]/20 transition-colors"></div>
+                        <div class="flex justify-between items-center mb-6">
+                            <div class="w-12 h-12 rounded-xl bg-[#1877F2]/20 text-[#1877F2] flex items-center justify-center text-2xl"><i class="fa-brands fa-facebook-f"></i></div>
+                            <span class="text-xs font-bold text-white bg-white/10 px-3 py-1 rounded-full">Facebook</span>
+                        </div>
+                        <p class="text-sm text-textMuted font-medium mb-1">Total Engagement</p>
+                        <h3 class="text-3xl font-bold font-heading">452K</h3>
+                        <div class="text-success text-xs mt-2 font-medium"><i class="fa-solid fa-arrow-up mr-1"></i> 12% vs last week</div>
+                    </div>
+
+                    <!-- Instagram -->
+                    <div class="glass p-6 rounded-2xl border border-white/5 hover:border-[#E4405F]/50 transition-colors relative overflow-hidden group hover:-translate-y-1 shadow-lg">
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-[#E4405F]/10 rounded-full blur-xl group-hover:bg-[#E4405F]/20 transition-colors"></div>
+                        <div class="flex justify-between items-center mb-6">
+                            <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-[#f09433] to-[#bc1888] text-white flex items-center justify-center text-2xl"><i class="fa-brands fa-instagram"></i></div>
+                            <span class="text-xs font-bold text-white bg-white/10 px-3 py-1 rounded-full">Instagram</span>
+                        </div>
+                        <p class="text-sm text-textMuted font-medium mb-1">Total Engagement</p>
+                        <h3 class="text-3xl font-bold font-heading">890K</h3>
+                        <div class="text-success text-xs mt-2 font-medium"><i class="fa-solid fa-arrow-up mr-1"></i> 24% vs last week</div>
+                    </div>
+
+                    <!-- TikTok -->
+                    <div class="glass p-6 rounded-2xl border border-white/5 hover:border-[#00f2fe]/50 transition-colors relative overflow-hidden group hover:-translate-y-1 shadow-lg">
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-[#00f2fe]/10 rounded-full blur-xl group-hover:bg-[#00f2fe]/20 transition-colors"></div>
+                        <div class="flex justify-between items-center mb-6">
+                            <div class="w-12 h-12 rounded-xl bg-white/10 text-white flex items-center justify-center text-2xl drop-shadow-[2px_2px_0px_#00f2fe]"><i class="fa-brands fa-tiktok"></i></div>
+                            <span class="text-xs font-bold text-white bg-white/10 px-3 py-1 rounded-full">TikTok</span>
+                        </div>
+                        <p class="text-sm text-textMuted font-medium mb-1">Total Engagement</p>
+                        <h3 class="text-3xl font-bold font-heading">1.5M</h3>
+                        <div class="text-success text-xs mt-2 font-medium"><i class="fa-solid fa-arrow-up mr-1"></i> 45% vs last week</div>
+                    </div>
+
+                    <!-- WhatsApp -->
+                    <div class="glass p-6 rounded-2xl border border-white/5 hover:border-[#25D366]/50 transition-colors relative overflow-hidden group hover:-translate-y-1 shadow-lg">
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-[#25D366]/10 rounded-full blur-xl group-hover:bg-[#25D366]/20 transition-colors"></div>
+                        <div class="flex justify-between items-center mb-6">
+                            <div class="w-12 h-12 rounded-xl bg-[#25D366]/20 text-[#25D366] flex items-center justify-center text-2xl"><i class="fa-brands fa-whatsapp"></i></div>
+                            <span class="text-xs font-bold text-white bg-white/10 px-3 py-1 rounded-full">WhatsApp</span>
+                        </div>
+                        <p class="text-sm text-textMuted font-medium mb-1">Total Engagement</p>
+                        <h3 class="text-3xl font-bold font-heading">125K</h3>
+                        <div class="text-success text-xs mt-2 font-medium"><i class="fa-solid fa-arrow-up mr-1"></i> 8% vs last week</div>
+                    </div>
+
+                    <!-- Reddit -->
+                    <div class="glass p-6 rounded-2xl border border-white/5 hover:border-[#FF4500]/50 transition-colors relative overflow-hidden group hover:-translate-y-1 shadow-lg">
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-[#FF4500]/10 rounded-full blur-xl group-hover:bg-[#FF4500]/20 transition-colors"></div>
+                        <div class="flex justify-between items-center mb-6">
+                            <div class="w-12 h-12 rounded-xl bg-[#FF4500]/20 text-[#FF4500] flex items-center justify-center text-2xl"><i class="fa-brands fa-reddit-alien"></i></div>
+                            <span class="text-xs font-bold text-white bg-white/10 px-3 py-1 rounded-full">Reddit</span>
+                        </div>
+                        <p class="text-sm text-textMuted font-medium mb-1">Total Engagement</p>
+                        <h3 class="text-3xl font-bold font-heading">68K</h3>
+                        <div class="text-danger text-xs mt-2 font-medium"><i class="fa-solid fa-arrow-down mr-1"></i> 2% vs last week</div>
+                    </div>
+
+                    <!-- X (Twitter) -->
+                    <div class="glass p-6 rounded-2xl border border-white/5 hover:border-white/50 transition-colors relative overflow-hidden group hover:-translate-y-1 shadow-lg">
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-white/10 rounded-full blur-xl group-hover:bg-white/20 transition-colors"></div>
+                        <div class="flex justify-between items-center mb-6">
+                            <div class="w-12 h-12 rounded-xl bg-white/20 text-white flex items-center justify-center text-2xl"><i class="fa-brands fa-x-twitter"></i></div>
+                            <span class="text-xs font-bold text-white bg-white/10 px-3 py-1 rounded-full">X (Twitter)</span>
+                        </div>
+                        <p class="text-sm text-textMuted font-medium mb-1">Total Engagement</p>
+                        <h3 class="text-3xl font-bold font-heading">320K</h3>
+                        <div class="text-success text-xs mt-2 font-medium"><i class="fa-solid fa-arrow-up mr-1"></i> 15% vs last week</div>
+                    </div>
+
+                    <!-- Kuaishou -->
+                    <div class="glass p-6 rounded-2xl border border-white/5 hover:border-[#FF7700]/50 transition-colors relative overflow-hidden group hover:-translate-y-1 shadow-lg">
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-[#FF7700]/10 rounded-full blur-xl group-hover:bg-[#FF7700]/20 transition-colors"></div>
+                        <div class="flex justify-between items-center mb-6">
+                            <div class="w-12 h-12 rounded-xl bg-[#FF7700]/20 text-[#FF7700] flex items-center justify-center text-2xl"><i class="fa-solid fa-video"></i></div>
+                            <span class="text-xs font-bold text-white bg-white/10 px-3 py-1 rounded-full">Kuaishou</span>
+                        </div>
+                        <p class="text-sm text-textMuted font-medium mb-1">Total Engagement</p>
+                        <h3 class="text-3xl font-bold font-heading">210K</h3>
+                        <div class="text-success text-xs mt-2 font-medium"><i class="fa-solid fa-arrow-up mr-1"></i> 32% vs last week</div>
+                    </div>
+
+                    <!-- Threads -->
+                    <div class="glass p-6 rounded-2xl border border-white/5 hover:border-white/50 transition-colors relative overflow-hidden group hover:-translate-y-1 shadow-lg">
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-white/10 rounded-full blur-xl group-hover:bg-white/20 transition-colors"></div>
+                        <div class="flex justify-between items-center mb-6">
+                            <div class="w-12 h-12 rounded-xl bg-white/20 text-white flex items-center justify-center text-2xl"><i class="fa-brands fa-threads"></i></div>
+                            <span class="text-xs font-bold text-white bg-white/10 px-3 py-1 rounded-full">Threads</span>
+                        </div>
+                        <p class="text-sm text-textMuted font-medium mb-1">Total Engagement</p>
+                        <h3 class="text-3xl font-bold font-heading">95K</h3>
+                        <div class="text-success text-xs mt-2 font-medium"><i class="fa-solid fa-arrow-up mr-1"></i> 18% vs last week</div>
+                    </div>
+
+                    <!-- Tumblr -->
+                    <div class="glass p-6 rounded-2xl border border-white/5 hover:border-[#36465D]/50 transition-colors relative overflow-hidden group hover:-translate-y-1 shadow-lg">
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-[#36465D]/20 rounded-full blur-xl group-hover:bg-[#36465D]/30 transition-colors"></div>
+                        <div class="flex justify-between items-center mb-6">
+                            <div class="w-12 h-12 rounded-xl bg-[#36465D]/40 text-[#ffffff] flex items-center justify-center text-2xl"><i class="fa-brands fa-tumblr"></i></div>
+                            <span class="text-xs font-bold text-white bg-white/10 px-3 py-1 rounded-full">Tumblr</span>
+                        </div>
+                        <p class="text-sm text-textMuted font-medium mb-1">Total Engagement</p>
+                        <h3 class="text-3xl font-bold font-heading">42K</h3>
+                        <div class="text-warning text-xs mt-2 font-medium"><i class="fa-solid fa-minus mr-1"></i> 0% vs last week</div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Reply Modal Overlay -->
+    <div id="reply-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/80 backdrop-blur-sm opacity-0 transition-opacity duration-300">
+        <div class="glass w-full max-w-lg rounded-2xl p-6 transform scale-95 transition-transform duration-300">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="font-heading font-bold text-lg text-white">Reply to Message</h3>
+                <button onclick="closeReplyModal()" class="text-textMuted hover:text-white transition-colors"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            
+            <div class="mb-4 p-3 bg-black/40 rounded-lg border border-white/5">
+                <p id="reply-modal-customer" class="text-xs font-bold text-primary mb-1"></p>
+                <p id="reply-modal-content" class="text-sm text-textMuted line-clamp-3"></p>
+            </div>
+
+            <textarea id="reply-textarea" rows="4" class="w-full bg-black/30 border border-white/10 rounded-lg p-3 text-sm text-white focus:outline-none focus:border-primary transition-colors resize-none mb-4" placeholder="Type your reply here..."></textarea>
+            
+            <div class="flex justify-end space-x-3">
+                <button onclick="closeReplyModal()" class="px-4 py-2 rounded-lg text-sm font-medium text-textMuted hover:bg-white/5 transition-colors">Cancel</button>
+                <button onclick="submitReply()" class="bg-primary text-white px-6 py-2 rounded-lg text-sm font-medium hover:bg-blue-600 transition-colors shadow-lg">Send Reply</button>
+            </div>
+            
+            <!-- Hidden input to store active msg ID -->
+            <input type="hidden" id="active-msg-id" value="">
+        </div>
+    </div>
+
+    <!-- Logic -->
+    <script>
+        // --- View Switching Logic ---
+        function switchView(viewName, title, subtitle) {
+            document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
+            const targetView = document.getElementById('view-' + viewName);
+            if(targetView) targetView.classList.remove('hidden');
+            
+            document.querySelectorAll('.nav-item').forEach(el => {
+                el.classList.remove('active', 'border-primary');
+                el.style.background = '';
+                el.style.borderLeft = '';
+            });
+            
+            const activeNav = document.getElementById('nav-' + viewName);
+            if(activeNav) activeNav.classList.add('active');
+            
+            const headerTitle = document.getElementById('header-title');
+            const headerSubtitle = document.getElementById('header-subtitle');
+            headerTitle.style.opacity = 0;
+            headerSubtitle.style.opacity = 0;
+            
+            setTimeout(() => {
+                headerTitle.innerText = title;
+                headerSubtitle.innerText = subtitle;
+                headerTitle.style.opacity = 1;
+                headerSubtitle.style.opacity = 1;
+            }, 200);
+        }
+
+        // --- Message Center Data & Logic ---
+
+        // Raw Questions provided by user
+        const rawQuestions = [
+            "Please provide a quotation for a POS system for our retail store with 3 cashier terminals, barcode scanners, receipt printers, and a cash drawer for each counter.",
+            "Can your POS system support multiple branches with real-time inventory synchronization? Please include the pricing for a 5-branch setup.",
+            "We currently use another POS system. Can you migrate our existing products, customer database, and sales history into your system? Is there an additional cost?",
+            "Does your POS system support customer credit accounts, installment payments, and overdue payment reminders? Please include these features in the quotation if available.",
+            "Can your POS system integrate with our e-commerce website so that online and in-store inventory remain synchronized automatically?",
+            "Please provide a quotation for a restaurant POS system with kitchen order printing, table management, waiter ordering tablets, and kitchen display screens (KDS).",
+            "Will your software work with our existing Epson receipt printers, Zebra barcode scanners, barcode label printers, and cash drawers, or do we need to purchase new hardware?",
+            "Does your POS system include advanced reporting such as daily sales, profit and loss, inventory valuation, cashier performance, and branch-wise sales? Are these reports included in the standard package?",
+            "We have approximately 20,000 products and 10 users. Can your POS system handle this workload efficiently, and what server or cloud package do you recommend?",
+            "Please provide a complete quotation that includes software licensing, installation, user training, data migration, technical support, warranty, and annual maintenance costs.",
+            "Do you offer the POS machine on a rental or FOC (Free on Contract) basis? Please explain the eligibility requirements and contract terms.",
+            "What is included with the rented POS machine? Does it come with a receipt printer, barcode scanner, cash drawer, customer display, and installation?",
+            "If the POS machine develops a hardware fault during the rental period, do you provide free repairs, replacement equipment, and on-site technical support?",
+            "Can we upgrade or add more rented POS machines as our business grows? Please provide the pricing and process for additional terminals.",
+            "At the end of the rental or FOC contract, what are our options? Can we renew the agreement, purchase the equipment, or return it without additional charges?",
+            "Can the POS machine connect to our existing peripherals, such as Epson or Star receipt printers, Zebra barcode scanners, barcode label printers, weighing scales, and cash drawers?",
+            "Is the POS machine suitable for continuous daily operation (12–24 hours), and does it include features such as a fanless design, SSD storage, and protection against dust and heat?",
+            "Employee login authentication failed.",
+            "Leave request approval workflow not functioning.",
+            "Payroll calculation mismatch due to incorrect attendance data.",
+            "Employee records not updating after modification.",
+            "Attendance synchronization failure with biometric devices.",
+            "Bank reconciliation mismatch.",
+            "Duplicate invoice or payment detected.",
+            "Tax (VAT/GST) calculation error.",
+            "Check-in/check-out process failed.",
+            "Payment transaction declined or not recorded.",
+            "Room availability not updating after reservation.",
+            "Guest profile or reservation details missing.",
+            "Student registration failed.",
+            "Attendance records not updating.",
+            "Examination results not published or calculated incorrectly."
+        ];
+
+        // Platforms setup
+        const platforms = [
+            { name: "Facebook", icon: "fa-facebook-f", color: "#1877F2" },
+            { name: "WhatsApp", icon: "fa-whatsapp", color: "#25D366" },
+            { name: "Twitter", icon: "fa-x-twitter", color: "#000000" },
+            { name: "Instagram", icon: "fa-instagram", color: "#E4405F" },
+            { name: "Email Support", icon: "fa-envelope", color: "#2563EB" }
+        ];
+
+        // Generate unique IDs and format array
+        function generateId() { return Math.floor(1000 + Math.random() * 9000); }
+        
+        // Shuffle function (Fisher-Yates) to satisfy "bottom to middle, middle to top"
+        function shuffleArray(array) {
+            let currentIndex = array.length, randomIndex;
+            while (currentIndex !== 0) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+                [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+            }
+            return array;
+        }
+
+        let messagesData = [];
+
+        // Save data persistently in the background
+        function saveToBackground() {
+            localStorage.setItem('omnisync_messages_data', JSON.stringify(messagesData));
+        }
+
+        function initializeMessages() {
+            // Check if we have saved background data
+            const savedData = localStorage.getItem('omnisync_messages_data');
+            
+            if (savedData) {
+                // Load from background storage to preserve replies and shuffled order
+                messagesData = JSON.parse(savedData);
+            } else {
+                // Deduplicate to avoid exact repeating requests for realism if requested, but I'll use all items
+                let shuffledQuestions = shuffleArray([...rawQuestions]);
+                
+                messagesData = shuffledQuestions.map((q, index) => {
+                    const plat = platforms[Math.floor(Math.random() * platforms.length)];
+                    return {
+                        id: `MSG-${generateId()}-${index}`,
+                        customerId: `CUST-${generateId()}${String.fromCharCode(65 + Math.floor(Math.random() * 26))}`, // Unique Customer ID
+                        content: q,
+                        platform: plat,
+                        time: index === 0 ? "Just now" : `${Math.floor(Math.random() * 59) + 1} mins ago`,
+                        reply: null
+                    };
+                });
+                
+                // Perform initial background save
+                saveToBackground();
+            }
+            
+            document.getElementById('msg-badge').innerText = messagesData.length;
+            renderMessages();
+        }
+
+        // Render to DOM
+        function renderMessages() {
+            const container = document.getElementById('messages-container');
+            container.innerHTML = '';
+            
+            messagesData.forEach(msg => {
+                const msgEl = document.createElement('div');
+                msgEl.className = 'glass p-4 rounded-2xl border border-white/5 hover:border-white/10 transition-colors flex flex-col space-y-3';
+                
+                // Top section (Customer query)
+                let html = `
+                    <div class="flex items-start justify-between w-full">
+                        <div class="flex items-start space-x-4">
+                            <div class="relative flex-shrink-0 mt-1">
+                                <div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-sm font-bold text-white uppercase border border-white/10">
+                                    ${msg.customerId.substring(5, 7)}
+                                </div>
+                                <div class="absolute -bottom-1 -right-1 w-5 h-5 rounded-full flex items-center justify-center text-[10px] text-white border-2 border-[#0B1120]" style="background-color: ${msg.platform.color}">
+                                    <i class="fa-brands ${msg.platform.icon}"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-sm text-white flex items-center">
+                                    Customer ${msg.customerId} 
+                                    ${!msg.reply ? '<span class="ml-2 w-2 h-2 rounded-full bg-primary" title="Unread"></span>' : ''}
+                                </h4>
+                                <p class="text-sm text-textMuted mt-1 leading-relaxed">${msg.content}</p>
+                            </div>
+                        </div>
+                        <div class="flex flex-col items-end space-y-2 flex-shrink-0 ml-4">
+                            <span class="text-[10px] text-textMuted font-medium uppercase tracking-wider">${msg.time}</span>
+                            ${!msg.reply ? `<button onclick="openReplyModal('${msg.id}')" class="bg-primary/20 text-primary border border-primary/30 hover:bg-primary hover:text-white px-4 py-1.5 rounded-lg text-sm font-medium transition-colors shadow-sm"><i class="fa-solid fa-reply mr-2"></i>Reply</button>` : ''}
+                        </div>
+                    </div>
+                `;
+
+                // Render saved reply if it exists
+                if (msg.reply) {
+                    html += `
+                        <div class="ml-14 mt-2 p-3 bg-primary/10 border border-primary/20 rounded-xl relative group">
+                            <p class="text-xs font-bold text-primary mb-1"><i class="fa-solid fa-headset mr-1"></i> Sent by localadmin/scc#$!0620</p>
+                            <p class="text-sm text-white">${msg.reply}</p>
+                            <button onclick="deleteReply('${msg.id}')" class="absolute top-3 right-3 text-textMuted hover:text-danger opacity-0 group-hover:opacity-100 transition-opacity" title="Delete Reply">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                        </div>
+                    `;
+                }
+
+                msgEl.innerHTML = html;
+                container.appendChild(msgEl);
+            });
+        }
+
+        // --- Reply Modal Logic ---
+        const replyModal = document.getElementById('reply-modal');
+        const replyModalInner = replyModal.querySelector('.glass');
+
+        function openReplyModal(msgId) {
+            const msg = messagesData.find(m => m.id === msgId);
+            if(!msg) return;
+
+            document.getElementById('active-msg-id').value = msgId;
+            document.getElementById('reply-modal-customer').innerText = `Replying to ${msg.customerId}`;
+            document.getElementById('reply-modal-content').innerText = msg.content;
+            document.getElementById('reply-textarea').value = '';
+
+            replyModal.classList.remove('hidden');
+            setTimeout(() => {
+                replyModal.classList.remove('opacity-0');
+                replyModalInner.classList.remove('scale-95');
+            }, 10);
+        }
+
+        function closeReplyModal() {
+            replyModal.classList.add('opacity-0');
+            replyModalInner.classList.add('scale-95');
+            setTimeout(() => {
+                replyModal.classList.add('hidden');
+            }, 300);
+        }
+
+        function submitReply() {
+            const msgId = document.getElementById('active-msg-id').value;
+            const text = document.getElementById('reply-textarea').value.trim();
+            if(!text) return;
+
+            const msgIndex = messagesData.findIndex(m => m.id === msgId);
+            if(msgIndex > -1) {
+                messagesData[msgIndex].reply = text;
+                
+                // Saving process occurs silently in the background
+                saveToBackground();
+                
+                renderMessages();
+                closeReplyModal();
+            }
+        }
+
+        function deleteReply(msgId) {
+            if(confirm("Are you sure you want to delete this reply?")) {
+                const msgIndex = messagesData.findIndex(m => m.id === msgId);
+                if(msgIndex > -1) {
+                    messagesData[msgIndex].reply = null;
+                    
+                    // Saving deletion process occurs silently in the background
+                    saveToBackground();
+                    
+                    renderMessages();
+                }
+            }
+        }
+
+        // --- Export Feature ---
+        function exportReplies() {
+            // Filter only messages that have a reply
+            const repliedMessages = messagesData.filter(m => m.reply !== null);
+            
+            if(repliedMessages.length === 0) {
+                alert("No replies found. Please reply to at least one message before exporting.");
+                return;
+            }
+
+            // Format for export
+            const exportData = repliedMessages.map(m => ({
+                QuestionID: m.id,
+                CustomerID: m.customerId,
+                Platform: m.platform.name,
+                CustomerQuestion: m.content,
+                AgentReply: m.reply,
+                RepliedBy: 'localadmin/scc#$!0620'
+            }));
+
+            // Create Blob and Download
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportData, null, 4));
+            const downloadAnchorNode = document.createElement('a');
+            downloadAnchorNode.setAttribute("href",     dataStr);
+            downloadAnchorNode.setAttribute("download", "OmniSync_Replies_Export.json");
+            document.body.appendChild(downloadAnchorNode); // required for firefox
+            downloadAnchorNode.click();
+            downloadAnchorNode.remove();
+        }
+
+        // Initialize App
+        window.onload = () => {
+            initializeMessages();
+        };
+        
+    </script>
+</body>
+</html>
