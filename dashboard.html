@@ -143,7 +143,7 @@
                 <!-- My Profile (Updated User ID) -->
                 <button class="flex items-center space-x-2 text-textMuted hover:text-white transition-colors text-sm font-medium bg-white/5 px-3 py-1.5 rounded-full border border-white/10">
                     <i class="fa-solid fa-user-shield text-primary"></i>
-                    <span class="hidden sm:inline tracking-wider font-mono text-xs">localadmin/scc#$!0620</span>
+                    <span class="hidden sm:inline tracking-wider font-mono text-xs">localadmin/scc#$!0620@!</span>
                 </button>
                 
                 <!-- Topbar Logout -->
@@ -655,7 +655,7 @@
                 if (msg.reply) {
                     html += `
                         <div class="ml-14 mt-2 p-3 bg-primary/10 border border-primary/20 rounded-xl relative group">
-                            <p class="text-xs font-bold text-primary mb-1"><i class="fa-solid fa-headset mr-1"></i> Sent by localadmin/scc#$!0620@!</p>
+                            <p class="text-xs font-bold text-primary mb-1"><i class="fa-solid fa-headset mr-1"></i> Sent by localadmin/scc#$!0620@!@!</p>
                             <p class="text-sm text-white">${msg.reply}</p>
                             <button onclick="deleteReply('${msg.id}')" class="absolute top-3 right-3 text-textMuted hover:text-danger opacity-0 group-hover:opacity-100 transition-opacity" title="Delete Reply">
                                 <i class="fa-solid fa-trash-can"></i>
@@ -745,7 +745,7 @@
                 Platform: m.platform.name,
                 CustomerQuestion: m.content,
                 AgentReply: m.reply,
-                RepliedBy: 'localadmin/scc#$!0620'
+                RepliedBy: 'localadmin/scc#$!0620@!'
             }));
 
             // Create Blob and Download
